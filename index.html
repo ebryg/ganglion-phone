@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ganglion</title>
+  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0B0B0C" media="(prefers-color-scheme: dark)">
+  <meta name="referrer" content="no-referrer">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="phone.css">
+</head>
+<body>
+  <!-- Ganglion on the phone. A static page: it holds no data and no account. After pairing,
+       it talks to the researcher's own computer through end-to-end encrypted messages. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="mark" viewBox="0 0 1024 1024">
+      <g fill="none" stroke="currentColor" stroke-width="44" stroke-linecap="round">
+        <path d="M512 512Q392 420 262 286"/><path d="M512 512Q600 372 716 236"/>
+        <path d="M512 512Q676 500 806 452"/><path d="M512 512Q640 680 748 786"/>
+        <path d="M512 512Q480 690 404 820"/><path d="M512 512Q350 560 222 596"/>
+      </g>
+      <g fill="currentColor"><circle cx="262" cy="286" r="34"/><circle cx="716" cy="236" r="34"/><circle cx="748" cy="786" r="34"/><circle cx="404" cy="820" r="34"/><circle cx="222" cy="596" r="34"/></g>
+      <circle cx="806" cy="452" r="62" fill="none" stroke="var(--accent)" stroke-width="14" opacity=".5"/>
+      <circle cx="806" cy="452" r="38" fill="var(--accent)"/>
+      <circle cx="512" cy="512" r="124" fill="var(--accent)"/>
+      <circle cx="536" cy="492" r="48" fill="var(--bg)"/>
+      <circle cx="546" cy="484" r="16" fill="var(--accent)"/>
+    </symbol>
+  </svg>
+
+  <header class="bar">
+    <svg class="mark" aria-hidden="true"><use href="#mark"/></svg>
+    <span class="name">Ganglion</span>
+    <span class="conn" id="conn"><span class="dot"></span><span id="conn-text"></span></span>
+  </header>
+
+  <!-- Not paired yet -->
+  <main class="pair" id="pair" hidden>
+    <svg class="pair-mark" aria-hidden="true"><use href="#mark"/></svg>
+    <h1 data-t="pair-title">Pair with your computer</h1>
+    <p data-t="pair-how">On your computer, open Ganglion → Settings → Phone → Pair this phone, and scan the code with this phone’s camera.</p>
+    <p class="fine" data-t="pair-private">The code holds a key that never leaves your two devices. Messages between them are end-to-end encrypted.</p>
+  </main>
+
+  <!-- Paired -->
+  <main class="app" id="app" hidden>
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-tab="ask" aria-selected="true" data-t="tab-ask">Ask</button>
+      <button role="tab" data-tab="briefing" aria-selected="false" data-t="tab-briefing">Briefing</button>
+      <button role="tab" data-tab="library" aria-selected="false" data-t="tab-library">Library</button>
+    </nav>
+
+    <section class="panel" id="tab-ask">
+      <div class="thread" id="thread"></div>
+      <form class="composer" id="ask-form">
+        <textarea id="q" dir="auto" rows="1" data-tp="ask-placeholder" placeholder="Ask about your papers"></textarea>
+        <button class="send" type="submit" aria-label="Send"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+      </form>
+      <button class="link" type="button" id="new-q" hidden data-t="new-q">New question</button>
+    </section>
+
+    <section class="panel" id="tab-briefing" hidden>
+      <div id="briefing"></div>
+      <button class="link" type="button" id="refresh-briefing" data-t="refresh">Refresh</button>
+    </section>
+
+    <section class="panel" id="tab-library" hidden>
+      <form id="search-form" class="search"><input id="s" type="search" dir="auto" data-tp="search-placeholder" placeholder="Search your library"></form>
+      <ol class="results" id="results"></ol>
+    </section>
+
+    <footer class="foot"><button class="link quiet" type="button" id="unpair" data-t="unpair">Unpair this phone</button></footer>
+  </main>
+
+  <script src="phone.js"></script>
+</body>
+</html>
