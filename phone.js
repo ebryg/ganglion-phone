@@ -8,7 +8,7 @@
 
    The page and the computer exchange AES-256-GCM encrypted messages through
    two private ntfy topics. ntfy relays them without being able to read them.
-   The computer does the work (the assistant, search, the morning briefing). */
+   The computer does the work (the assistant, search, paper updates). */
 
 const $ = (s) => document.querySelector(s);
 const HE = navigator.language && navigator.language.toLowerCase().startsWith("he");
@@ -18,13 +18,13 @@ const T = {
     "במחשב, פתח את גנגליון ← הגדרות ← טלפון ← חבר את הטלפון, וסרוק את הקוד במצלמה של הטלפון הזה."],
   "pair-private": ["The code holds a key that never leaves your two devices. Messages between them are end-to-end encrypted.",
     "בקוד יש מפתח שלא יוצא משני המכשירים שלך. ההודעות ביניהם מוצפנות מקצה לקצה."],
-  "tab-ask": ["Ask", "שאלה"], "tab-briefing": ["Briefing", "תדריך"], "tab-library": ["Library", "ספרייה"],
+  "tab-ask": ["Ask", "שאלה"], "tab-briefing": ["Updates", "עדכונים"], "tab-library": ["Library", "ספרייה"],
   "ask-placeholder": ["Ask about your papers", "שאל על המאמרים שלך"],
   "search-placeholder": ["Search your library", "חיפוש בספרייה"],
   "new-q": ["New question", "שאלה חדשה"], "refresh": ["Refresh", "רענן"], "unpair": ["Unpair this phone", "נתק את הטלפון"],
   "connecting": ["connecting…", "מתחבר…"], "online": ["computer online", "המחשב מחובר"], "offline": ["computer not answering", "המחשב לא עונה"],
   "offline-long": ["Your computer isn’t answering. It needs to be on, with Ganglion running.", "המחשב לא עונה. הוא צריך להיות דלוק, עם גנגליון פועל."],
-  "no-briefing": ["No briefing yet.", "עדיין אין תדריך."], "no-results": ["Nothing found.", "לא נמצא כלום."],
+  "no-briefing": ["No updates yet.", "עדיין אין עדכונים."], "no-results": ["Nothing found.", "לא נמצא כלום."],
   "unpair-confirm": ["Tap again to unpair", "לחץ שוב לניתוק"], "timeout": ["No answer from your computer.", "אין תשובה מהמחשב."],
 };
 const t = (k) => (T[k] ? T[k][HE ? 1 : 0] : k);

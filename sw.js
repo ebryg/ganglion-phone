@@ -1,5 +1,5 @@
 /* Keeps the page installable and quick to open. Messages to ntfy always go to the network. */
-const V = "ganglion-phone-v2";
+const V = "ganglion-phone-v3";
 const base = new URL("./", self.location).href;
 self.addEventListener("install", (e) => e.waitUntil(caches.open(V).then((c) => c.addAll(["", "phone.js", "phone.css", "icon-192.png"].map((p) => base + p))).then(() => self.skipWaiting())));
 self.addEventListener("activate", (e) => e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== V).map((k) => caches.delete(k)))).then(() => self.clients.claim())));
