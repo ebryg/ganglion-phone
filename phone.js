@@ -11,7 +11,11 @@
    The computer does the work (the assistant, search, paper updates). */
 
 const $ = (s) => document.querySelector(s);
-const HE = navigator.language && navigator.language.toLowerCase().startsWith("he");
+// The language: the one chosen with the switch in the top bar, else the phone's own.
+let HE = (() => {
+  try { const v = localStorage.getItem("ganglion-link-lang"); if (v) return v === "he"; } catch {}
+  return !!navigator.language && navigator.language.toLowerCase().startsWith("he");
+})();
 const T = {
   "pair-title": ["Pair with your computer", "חיבור למחשב שלך"],
   "pair-how": ["On your computer, open Ganglion → Settings → Phone → Pair this phone, and scan the code with this phone’s camera.",
@@ -185,11 +189,26 @@ function showTab(name) {
   if (name === "briefing") loadBriefing();
 }
 
-async function start() {
+function applyLang() {
   document.documentElement.lang = HE ? "he" : "en";
   document.documentElement.dir = HE ? "rtl" : "ltr";
   document.querySelectorAll("[data-t]").forEach((el) => (el.textContent = t(el.dataset.t)));
   document.querySelectorAll("[data-tp]").forEach((el) => (el.placeholder = t(el.dataset.tp)));
+  $("#lang").textContent = HE ? "EN" : "עב";
+  $("#lang").setAttribute("aria-label", HE ? "Switch to English" : "עברית");
+  const c = $("#conn").className;
+  if (c.includes("on")) setOnline(true); else if (c.includes("off")) setOnline(false);
+}
+
+$("#lang").addEventListener("click", () => {
+  HE = !HE;
+  try { localStorage.setItem("ganglion-link-lang", HE ? "he" : "en"); } catch {}
+  applyLang();
+  if (!$("#tab-briefing").hidden) loadBriefing();
+});
+
+async function start() {
+  applyLang();
 
   // A fresh pairing arrives in the address after "#"; keep it, then clear it from the address bar.
   const m = location.hash.match(/#p=([A-Za-z0-9_-]+)/);

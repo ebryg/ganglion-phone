@@ -23,6 +23,7 @@ a { color: var(--accent); }
 .conn .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
 .conn.on .dot { background: var(--accent); box-shadow: 0 0 0 3px var(--halo); }
 .conn.off .dot { background: #B0502A; }
+.lang { border: 1px solid var(--line); background: none; color: var(--ink-2); border-radius: 8px; padding: 3px 8px; font: 600 12px var(--sans); min-width: 34px; }
 
 .pair { flex: 1; display: grid; place-content: center; justify-items: center; text-align: center; gap: 12px; padding: 32px 24px; }
 .pair-mark { width: 64px; height: 64px; color: var(--fiber); }
