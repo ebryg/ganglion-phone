@@ -124,9 +124,16 @@ async function ping() {
 // ---------- rendering ----------
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
+// Links from outside data (paper records, conference sites, the AI's answers) open only as web or Zotero
+// addresses: a "javascript:" link would run inside Ganglion.
+function safeUrl(u) {
+  const s = String(u || "").trim();
+  return /^(https?:\/\/|zotero:\/\/)/i.test(s) ? s : "#";
+}
+
 function markdown(src, cites = {}, urls = {}) {
   const inline = (s) => s
-    .replace(/\[@([A-Z0-9]{8})\]/g, (_, k) => urls[k] ? `<a class="cite" href="${esc(urls[k])}" target="_blank" rel="noopener">${esc(cites[k] || k)}</a>` : `<span class="cite">${esc(cites[k] || k)}</span>`)
+    .replace(/\[@([A-Z0-9]{8})\]/g, (_, k) => urls[k] ? `<a class="cite" href="${esc(safeUrl(urls[k]))}" target="_blank" rel="noopener">${esc(cites[k] || k)}</a>` : `<span class="cite">${esc(cites[k] || k)}</span>`)
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>").replace(/(^|[^*])\*([^*\s][^*]*)\*/g, "$1<em>$2</em>");
   return esc(src.replace(/<think>[\s\S]*?(<\/think>|$)/g, "").trim()).split(/\n{2,}/).map((b) => {
     const lines = b.split("\n");
@@ -177,7 +184,7 @@ async function loadBriefing() {
   if (!r) { box.innerHTML = `<p class="empty">${t("offline-long")}</p>`; return; }
   let d; try { d = JSON.parse(r.text); } catch { d = { items: [] }; }
   box.innerHTML = d.items.length ? d.items.map((i) => `<article class="item">
-      <div class="h ${i.kind === "new" ? "new" : ""}">${i.url ? `<a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.headline)}</a>` : esc(i.headline)}</div>
+      <div class="h ${i.kind === "new" ? "new" : ""}">${i.url ? `<a href="${esc(safeUrl(i.url))}" target="_blank" rel="noopener">${esc(i.headline)}</a>` : esc(i.headline)}</div>
       ${i.venue ? `<div class="m">${esc(i.venue)}</div>` : ""}<p>${esc(i.takeaway)}</p></article>`).join("")
     : `<p class="empty">${t("no-briefing")}</p>`;
 }
@@ -189,7 +196,7 @@ async function search(q) {
   const r = await request({ type: "search", q }, null, 30000);
   if (!r) { box.innerHTML = `<li class="empty">${t("offline-long")}</li>`; return; }
   let rows; try { rows = JSON.parse(r.text); } catch { rows = []; }
-  box.innerHTML = rows.length ? rows.map((p) => `<li class="item"><div class="h">${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.title)}</a>` : esc(p.title)}</div>
+  box.innerHTML = rows.length ? rows.map((p) => `<li class="item"><div class="h">${p.url ? `<a href="${esc(safeUrl(p.url))}" target="_blank" rel="noopener">${esc(p.title)}</a>` : esc(p.title)}</div>
       <div class="m">${esc(p.cite)}${p.venue ? " · " + esc(p.venue) : ""}</div></li>`).join("") : `<li class="empty">${t("no-results")}</li>`;
 }
 
