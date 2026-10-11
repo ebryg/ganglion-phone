@@ -155,10 +155,21 @@ async function ask(q) {
   conv = r.conv || conv; store.set("conv", conv);
   $("#new-q").hidden = false;
   turn.innerHTML = (r.text ? `<div class="answer">${markdown(r.text, r.cites || {}, r.urls || {})}</div>` : "") +
-    (r.error ? `<p class="err" dir="auto">${esc(r.error)}</p>` : "");
+    (r.error ? `<p class="err" dir="auto">${esc(errorText(r.error))}</p>` : "");
 }
 
-// ---------- briefing and library ----------
+// The computer's errors arrive in English; the common ones get a plain explanation in the phone's language.
+function errorText(e) {
+  if (/Couldn't reach the gateway/.test(e)) return HE
+    ? "המחשב לא הצליח להגיע ל־AI של המוסד. הוא זמין רק מתוך הרשת של המוסד: חבר את המחשב ל־VPN ונסה שוב."
+    : "Your computer couldn't reach your institution's AI. It is only open inside the institution: connect the computer to the VPN and try again.";
+  if (/Couldn't reach/.test(e)) return HE ? "המחשב לא הצליח להגיע ל־AI. בדוק את החיבור לאינטרנט במחשב ונסה שוב." : e;
+  if (/didn't accept the key/.test(e)) return HE ? "ה־AI לא קיבל את המפתח. בדוק אותו במחשב: הגדרות ← AI." : e;
+  if (/Connect an AI first/.test(e)) return HE ? "במחשב עדיין לא חובר AI: הגדרות ← AI." : e;
+  return e;
+}
+
+// ---------- updates and library ----------
 async function loadBriefing() {
   const box = $("#briefing");
   box.innerHTML = `<div class="empty"><span class="wait"></span></div>`;
@@ -222,7 +233,10 @@ async function start() {
   $("#app").hidden = false;
   listen();
   ping();
-  showTab(location.hash === "#briefing" ? "briefing" : "ask");
+  // A notification opens the updates (#updates; older ones say #briefing). The address is then left clean.
+  const updates = location.hash === "#updates" || location.hash === "#briefing";
+  if (location.hash) history.replaceState(null, "", location.pathname);
+  showTab(updates ? "briefing" : "ask");
 }
 
 document.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", () => showTab(b.dataset.tab)));
