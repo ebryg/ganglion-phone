@@ -131,15 +131,55 @@ function safeUrl(u) {
   return /^(https?:\/\/|zotero:\/\/)/i.test(s) ? s : "#";
 }
 
+function tex(s, display) {
+  if (!window.katex) return esc(display ? `$$${s}$$` : `$${s}$`);
+  try { return katex.renderToString(s, { displayMode: display, throwOnError: false, output: "html" }); }
+  catch { return esc(s); }
+}
+
+// The same reading as on the computer: code and formulas set aside first, then blocks (headings, tables, lists that
+// keep their numbers, paragraphs), then citations and emphasis inside each.
 function markdown(src, cites = {}, urls = {}) {
-  const inline = (s) => s
+  const kept = [];
+  const hold = (html) => `\u0000${kept.push(html) - 1}\u0000`;
+  src = src.replace(/<think>[\s\S]*?(<\/think>|$)/g, "");
+  src = src.replace(/```([\w+#.-]*)[^\n]*\n([\s\S]*?)```/g, (_, lang, code) => "\n\n" + hold(`<pre class="code"><code>${esc(code.replace(/\n$/, ""))}</code></pre>`) + "\n\n");
+  src = src.replace(/\$\$([\s\S]+?)\$\$|\\\[([\s\S]+?)\\\]/g, (_, a, b) => "\n\n" + hold(`<div class="math">${tex((a ?? b).trim(), true)}</div>`) + "\n\n");
+  src = src.replace(/`([^`\n]+)`/g, (_, c) => hold(`<code>${esc(c)}</code>`));
+  src = src.replace(/\\\((.+?)\\\)|(?<![\\$\w])\$(?=\S)([^$\n]+?)(?<=\S)\$(?![\w$])/g, (m, a, b) =>
+    b !== undefined && /^[\d.,\s]+$/.test(b) ? m : hold(tex(a ?? b, false)));
+  const inline = (x) => x
     .replace(/\[@([A-Z0-9]{8})\]/g, (_, k) => urls[k] ? `<a class="cite" href="${esc(safeUrl(urls[k]))}" target="_blank" rel="noopener">${esc(cites[k] || k)}</a>` : `<span class="cite">${esc(cites[k] || k)}</span>`)
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>").replace(/(^|[^*])\*([^*\s][^*]*)\*/g, "$1<em>$2</em>");
-  return esc(src.replace(/<think>[\s\S]*?(<\/think>|$)/g, "").trim()).split(/\n{2,}/).map((b) => {
+  const item = /^\s*([-*•]|\d+[.)])\s+/;
+  const blocks = esc(src.trim()).split(/\n{2,}/).flatMap((b) => {
+    const out = [];
+    for (const l of b.split("\n")) {
+      const last = out[out.length - 1];
+      const kind = item.test(l) || (last?.kind === "list" && /^\s{2,}\S/.test(l)) ? "list" : "text";
+      if (last && last.kind === kind) last.lines.push(l); else out.push({ kind, lines: [l] });
+    }
+    return out.map((g) => g.lines.join("\n"));
+  });
+  const html = blocks.map((b) => {
     const lines = b.split("\n");
-    if (lines.every((l) => /^\s*([-*•]|\d+[.)])\s+/.test(l))) return `<ul>${lines.map((l) => `<li>${inline(l.replace(/^\s*([-*•]|\d+[.)])\s+/, ""))}</li>`).join("")}</ul>`;
+    if (/^\u0000\d+\u0000$/.test(b.trim())) return b.trim();
+    if (/^#{1,6} /.test(b)) return `<h4>${inline(b.replace(/^#+ /, ""))}</h4>`;
+    if (lines.length > 1 && lines.every((l) => /^\s*\|.*\|\s*$/.test(l))) {
+      const rows = lines.filter((l) => !/^\s*\|[\s:|-]+\|\s*$/.test(l)).map((l) => l.trim().slice(1, -1).split("|").map((c) => c.trim()));
+      const [head, ...body] = rows;
+      return `<div class="table"><table><thead><tr>${head.map((c) => `<th>${inline(c)}</th>`).join("")}</tr></thead><tbody>${body.map((r) => `<tr>${r.map((c) => `<td>${inline(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+    }
+    if (lines.every((l) => item.test(l) || /^\s{2,}/.test(l))) {
+      const items = [];
+      for (const l of lines) { if (item.test(l)) items.push(l.replace(item, "")); else items[items.length - 1] += " " + l.trim(); }
+      const ordered = /^\s*\d/.test(lines[0]), start = ordered ? parseInt(lines[0], 10) : 1;
+      const tag = ordered ? "ol" : "ul";
+      return `<${tag}${start > 1 ? ` start="${start}"` : ""}>${items.map((i) => `<li>${inline(i)}</li>`).join("")}</${tag}>`;
+    }
     return `<p>${lines.map(inline).join("<br>")}</p>`;
   }).join("");
+  return html.replace(/\u0000(\d+)\u0000/g, (_, i) => kept[+i]);
 }
 
 // ---------- ask ----------
