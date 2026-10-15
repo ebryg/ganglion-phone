@@ -84,8 +84,8 @@
     <section class="view" id="view-bored" hidden>
       <p class="lede" data-t="bored-lede">A few minutes? Let your library surprise you.</p>
       <button class="card-btn" type="button" data-go="learn"><b data-t="learn">Something to learn</b><span data-t="learn-sub">One interesting thing from a random paper in your library.</span></button>
-      <button class="card-btn" type="button" data-go="q20"><b data-t="q20">20 questions</b><span data-t="q20-sub">Ganglion picks a paper from your library. Guess it in 20 yes/no questions. New every day.</span></button>
-      <button class="card-btn" type="button" data-go="conn"><b data-t="conn-game">Connections</b><span data-t="conn-sub">16 terms from your field in 4 hidden groups of 4. New every day.</span></button>
+      <button class="card-btn" type="button" data-go="q20"><b data-t="q20">Who am I?</b><span data-t="q20-sub">Ganglion picks a paper from your library. Guess it in 20 yes/no questions. New every day.</span></button>
+      <button class="card-btn" type="button" data-go="conn"><b data-t="conn-game">Quartets</b><span data-t="conn-sub">16 terms from your field in 4 hidden groups of 4. New every day.</span></button>
     </section>
 
     <section class="view" id="view-learn" hidden>
@@ -106,15 +106,17 @@
     </section>
 
     <section class="view" id="view-conn" hidden>
-      <p class="lede" data-t="conn-how">Find the 4 groups of 4 terms that belong together.</p>
+      <p class="lede"><span data-t="conn-how">Find the 4 groups of 4 terms that belong together.</span> <span class="level" id="conn-level"></span></p>
       <div id="conn-solved"></div>
       <div class="grid" id="conn-grid"></div>
       <p class="mistakes" id="conn-mistakes"></p>
       <div class="row-btns">
         <button class="btn quiet" type="button" id="conn-shuffle" data-t="shuffle">Shuffle</button>
         <button class="btn quiet" type="button" id="conn-clear" data-t="clear">Clear</button>
+        <button class="btn quiet" type="button" id="conn-hint" data-t="hint">Hint: show a pair</button>
         <button class="btn" type="button" id="conn-submit" data-t="submit" disabled>Submit</button>
       </div>
+      <div id="conn-stats"></div>
     </section>
 
     <section class="view" id="view-settings" hidden>
@@ -142,7 +144,7 @@
     <button type="button" class="menu-item" data-view="history"><span>☰</span><span data-t="history">Past conversations</span></button>
     <button type="button" class="menu-item" data-view="radar"><span>◉</span><span data-t="radar">Radar</span></button>
     <button type="button" class="menu-item" data-view="library"><span>⌕</span><span data-t="library">Library</span></button>
-    <button type="button" class="menu-item" data-view="bored"><span>✦</span><span data-t="bored">I’m bored</span></button>
+    <button type="button" class="menu-item" data-view="bored"><span>✦</span><span data-t="bored">Default mode</span></button>
     <button type="button" class="menu-item" data-view="settings"><span>⚙</span><span data-t="settings">Settings</span></button>
     <div class="menu-foot" id="menu-foot"></div>
   </nav>

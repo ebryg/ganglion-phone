@@ -29,7 +29,7 @@ const T = {
   "ask-placeholder": ["Ask about your papers", "שאל על המאמרים שלך"], "reply": ["Reply", "תגובה"],
   "search-placeholder": ["Search your library", "חיפוש בספרייה"],
   "new-q": ["New conversation", "שיחה חדשה"], "history": ["Past conversations", "שיחות קודמות"], "radar": ["Radar", "רדאר"],
-  "library": ["Library", "ספרייה"], "bored": ["I’m bored", "משעמם לי"], "settings": ["Settings", "הגדרות"],
+  "library": ["Library", "ספרייה"], "bored": ["Default mode", "מצב ברירת מחדל"], "settings": ["Settings", "הגדרות"],
   "refresh": ["Refresh", "רענן"], "unpair": ["Unpair this phone", "נתק את הטלפון"], "unpair-confirm": ["Tap again to unpair", "לחץ שוב לניתוק"],
   "connecting": ["Connecting…", "מתחבר…"], "online": ["Computer online", "המחשב מחובר"], "offline": ["Computer not answering", "המחשב לא עונה"],
   "offline-long": ["Your computer isn’t answering. It needs to be on, with Ganglion running.", "המחשב לא עונה. הוא צריך להיות דלוק, עם גנגליון פועל."],
@@ -40,13 +40,19 @@ const T = {
   "brief": ["Brief", "קצר"], "brief-sub": ["Short answers, the main points only.", "תשובות קצרות, רק העיקר."],
   "ste-sub": ["Simplified Technical English: short, plain sentences.", "אנגלית טכנית פשוטה: משפטים קצרים וברורים."],
   "computer": ["Your computer", "המחשב שלך"], "status": ["Status", "מצב"], "name": ["Name", "שם"], "ai": ["AI", "AI"], "papers": ["Papers", "מאמרים"],
-  "bored-lede": ["A few minutes? Let your library surprise you.", "יש כמה דקות? תן לספרייה שלך להפתיע אותך."],
+  "bored-lede": ["The mind is wandering? Let your library surprise you (your default mode network would approve).", "המחשבות נודדות? תן לספרייה שלך להפתיע אותך (רשת ברירת המחדל שלך הייתה מאשרת)."],
   "learn": ["Something to learn", "משהו ללמוד"], "learn-sub": ["One interesting thing from a random paper in your library.", "דבר מעניין אחד ממאמר אקראי בספרייה שלך."],
-  "q20": ["20 questions", "20 שאלות"], "q20-sub": ["Ganglion picks a paper from your library. Guess it in 20 yes/no questions. New every day.", "גנגליון בוחר מאמר מהספרייה שלך. נחש אותו ב־20 שאלות כן/לא. חדש כל יום."],
-  "conn-game": ["Connections", "קשרים"], "conn-sub": ["16 terms from your field in 4 hidden groups of 4. New every day.", "16 מונחים מהתחום שלך ב־4 קבוצות נסתרות של 4. חדש כל יום."],
-  "another": ["Another one", "עוד אחד"], "open-paper": ["Open the paper", "פתח את המאמר"],
+  "q20": ["Who am I?", "מי אני?"], "q20-sub": ["I’m a paper in your library. Find me in 21 yes/no questions. A new one every day.", "אני מאמר בספרייה שלך. מצא אותי ב־21 שאלות כן/לא. חדש כל יום."],
+  "conn-game": ["Quartets", "רביעיות"], "conn-sub": ["16 terms from your field in 4 hidden groups of 4. New every day, some days easy, some hard.", "16 מונחים מהתחום שלך ב־4 קבוצות נסתרות של 4. חדש כל יום, לפעמים קל ולפעמים קשה."],
+  "hint": ["Hint: show a pair", "רמז: חשוף זוג"], "level-easy": ["Today: easy", "היום: קל"], "level-medium": ["Today: medium", "היום: בינוני"], "level-hard": ["Today: hard", "היום: קשה"],
+  "not-group": ["Not a group", "לא קבוצה"], "stats": ["Your games", "המשחקים שלך"], "played": ["Played", "שוחקו"], "won": ["Won", "ניצחונות"],
+  "by-mistakes": ["Mistakes per game", "טעויות במשחק"], "by-questions": ["Questions to find me", "שאלות עד שמצאת אותי"], "hints-used": ["Games with the hint", "משחקים עם רמז"], "not-found": ["not found", "לא נמצא"],
+  "another": ["Another one", "עוד אחד"], "learn-q": ["What would you like to learn today?", "מה בא לך ללמוד היום?"],
+  "l-math": ["Something mathematical", "משהו מתמטי"], "l-theory": ["A theory", "תיאוריה"], "l-method": ["A method", "שיטה"],
+  "l-finding": ["A finding in my field", "ממצא בתחום שלי"], "l-beyond": ["A bit beyond my field", "קצת מחוץ לתחום שלי"], "l-surprise": ["Surprise me", "תפתיע אותי"],
+  "talk-about": ["Talk about it", "בוא נדבר על זה"], "start-over": ["Start over", "מההתחלה"], "open-paper": ["Open the paper", "פתח את המאמר"],
   "q20-placeholder": ["A yes/no question, or “Is it …?”", "שאלת כן/לא, או „זה …?”"], "give-up": ["Give up and show the paper", "וותר והראה את המאמר"],
-  "q20-intro": ["I picked one of the {n} papers in your library. Ask yes/no questions; name it (its first author is enough) to win.", "בחרתי אחד מ־{n} המאמרים בספרייה שלך. שאל שאלות כן/לא; נקוב בו (מספיק השם של המחבר הראשון) כדי לנצח."],
+  "q20-intro": ["I’m one of the {n} papers in your library. Ask me yes/no questions; name me (my first author is enough) to win.", "אני אחד מ־{n} המאמרים בספרייה שלך. שאל אותי שאלות כן/לא; נקוב בשמי (מספיק המחבר הראשון) כדי לנצח."],
   "q20-won": ["You got it in {n}!", "ניחשת ב־{n}!"], "q20-lost": ["It was:", "זה היה:"], "q20-left": ["{n} questions left", "נשארו {n} שאלות"],
   "a-yes": ["Yes", "כן"], "a-no": ["No", "לא"], "a-partly": ["Partly", "חלקית"], "a-unclear": ["Can’t tell", "אי אפשר לדעת"],
   "conn-how": ["Find the 4 groups of 4 terms that belong together.", "מצא את 4 הקבוצות של 4 מונחים ששייכים יחד."],
@@ -405,7 +411,51 @@ async function loadConvs() {
 }
 document.addEventListener("click", (e) => { const b = e.target.closest("[data-conv]"); if (b) openConversation(b.dataset.conv); });
 
-// ---------- I'm bored: something to learn ----------
+// ---------- Default mode: something to learn, chosen together (a few taps), or a surprise ----------
+const LEARN = { path: [] };
+const FIRST = ["l-math", "l-theory", "l-method", "l-finding", "l-beyond", "l-surprise"];
+function learnStart() {
+  LEARN.path = [];
+  $("#learn-more").hidden = true;
+  $("#learn-box").innerHTML = `<p class="lede">${esc(t("learn-q"))}</p><div class="options">${FIRST.map((k) =>
+    `<button type="button" class="option" data-first="${k}">${esc(t(k))}</button>`).join("")}</div>`;
+}
+function crumbs() {
+  return LEARN.path.length ? `<div class="crumbs">${LEARN.path.map((x) => `<span>${esc(x.a)}</span>`).join("<i>›</i>")}</div>` : "";
+}
+async function learnNext() {
+  const box = $("#learn-box");
+  box.innerHTML = crumbs() + `<div class="empty">${thinking()}</div>`;
+  const r = await requestJSON({ type: "learn_step", path: LEARN.path }, 90000);
+  if (!r || r.error) { box.innerHTML = crumbs() + `<p class="err">${esc(errorText(r?.error || t("timeout")))}</p><button class="btn quiet" type="button" data-learn-restart>${esc(t("start-over"))}</button>`; return; }
+  if (r.options) {
+    box.innerHTML = crumbs() + `<p class="lede" dir="auto">${esc(r.question)}</p><div class="options">${r.options.map((o) =>
+      `<button type="button" class="option" data-answer="${esc(o)}" data-q="${esc(r.question)}" dir="auto">${esc(o)}</button>`).join("")}</div>`
+      + `<button class="link quiet" type="button" data-learn-restart>${esc(t("start-over"))}</button>`;
+    return;
+  }
+  const [body, think] = (r.text || "").split(/\n\s*Think about:\s*/);
+  box.innerHTML = crumbs() + `<article class="learn">${r.papers.map((x) => `<div class="m" dir="auto">${esc(x.cite)} · ${x.url ? `<a href="${esc(safeUrl(x.url))}" target="_blank" rel="noopener">${esc(x.title)}</a>` : esc(x.title)}</div>`).join("")}
+    <div class="answer" dir="auto">${markdown(body || "")}</div>
+    ${think ? `<p class="think" dir="auto"><b>${HE ? "לחשוב על:" : "Think about:"}</b> ${esc(think)}</p>` : ""}
+    <div class="row-btns start"><button class="btn" type="button" data-talk="${esc(r.papers[0]?.title || "")}" data-cite="${esc(r.papers[0]?.cite || "")}">${esc(t("talk-about"))}</button>
+    <button class="btn quiet" type="button" data-learn-restart>${esc(t("another"))}</button></div></article>`;
+}
+document.addEventListener("click", (e) => {
+  const f = e.target.closest("[data-first]");
+  if (f) {
+    if (f.dataset.first === "l-surprise") return loadLearn();
+    LEARN.path = [{ q: t("learn-q"), a: T[f.dataset.first][0] }];
+    return learnNext();
+  }
+  const a = e.target.closest("[data-answer]");
+  if (a) { LEARN.path.push({ q: a.dataset.q, a: a.dataset.answer }); return learnNext(); }
+  if (e.target.closest("[data-learn-restart]")) return learnStart();
+  const talk = e.target.closest("[data-talk]");
+  if (talk) ask(`Let's talk about "${talk.dataset.talk}" (${talk.dataset.cite}): what's the key idea, and what can I take from it for my own research?`);
+});
+
+// Surprise me: one interesting thing from a random paper.
 async function loadLearn() {
   const box = $("#learn-box");
   $("#learn-more").disabled = true;
@@ -414,15 +464,38 @@ async function loadLearn() {
   $("#learn-more").disabled = false;
   if (!r || r.error) { box.innerHTML = `<p class="err">${esc(errorText(r?.error || t("timeout")))}</p>`; return; }
   const [body, think] = r.text.split(/\n\s*Think about:\s*/);
+  $("#learn-more").hidden = false;
   box.innerHTML = `<article class="learn"><div class="m" dir="auto">${esc(r.cite)}</div><h2 dir="auto">${esc(r.title)}</h2>
     <div class="answer" dir="auto">${markdown(body || "")}</div>
     ${think ? `<p class="think" dir="auto"><b>${HE ? "לחשוב על:" : "Think about:"}</b> ${esc(think)}</p>` : ""}
     ${r.url ? `<a class="btn quiet" href="${esc(safeUrl(r.url))}" target="_blank" rel="noopener">${esc(t("open-paper"))}</a>` : ""}</article>`;
 }
 
-// ---------- I'm bored: today's 20 questions (kept for the day on this phone) ----------
+// ---------- Default mode: stats of past games (kept on this phone), shown when a game ends ----------
+function record(game, entry) {
+  const all = store.get("stats-" + game) || [];
+  if (!all.some((x) => x.day === entry.day)) { all.push(entry); store.set("stats-" + game, all.slice(-365)); }
+}
+function statsHTML(game) {
+  const all = store.get("stats-" + game) || [];
+  if (!all.length) return "";
+  const won = all.filter((x) => x.won).length;
+  const buckets = game === "conn" ? [0, 1, 2, 3, 4].map((n) => [String(n), all.filter((x) => x.won && x.mistakes === n).length])
+    : [["1-5", [1, 5]], ["6-10", [6, 10]], ["11-15", [11, 15]], ["16-21", [16, 21]]].map(([l, [a, b]]) => [l, all.filter((x) => x.won && x.questions >= a && x.questions <= b).length]);
+  buckets.push([t("not-found"), all.filter((x) => !x.won).length]);
+  const max = Math.max(1, ...buckets.map(([, n]) => n));
+  const hints = game === "conn" ? `<div class="stat-line">${esc(t("hints-used"))}: <b>${all.filter((x) => x.hints).length}</b></div>` : "";
+  return `<section class="stats"><h3>${esc(t("stats"))}</h3>
+    <div class="stat-nums"><div><b>${all.length}</b><span>${esc(t("played"))}</span></div><div><b>${Math.round(100 * won / all.length)}%</b><span>${esc(t("won"))}</span></div></div>
+    <div class="stat-line">${esc(t(game === "conn" ? "by-mistakes" : "by-questions"))}</div>
+    ${buckets.map(([l, n]) => `<div class="bar-row"><span>${esc(l)}</span><div class="stat-bar"><i style="width:${Math.max(4, 100 * n / max)}%"></i></div><b>${n}</b></div>`).join("")}
+    ${hints}</section>`;
+}
+
+// ---------- Default mode: today's Who am I? (kept for the day on this phone) ----------
 const today = () => new Date().toISOString().slice(0, 10);
 let Q20 = null;
+const Q20_MAX = 21;
 async function loadQ20() {
   Q20 = store.get("q20");
   if (!Q20 || Q20.day !== today()) Q20 = { day: today(), asked: [], done: false, paper: null, won: false };
@@ -438,14 +511,15 @@ async function loadQ20() {
 function paintQ20() {
   $("#q20-intro").textContent = t("q20-intro", { n: Q20.papers });
   $("#q20-list").innerHTML = Q20.asked.map((a) => `<li><span dir="auto">${esc(a.q)}</span><b class="ans ${a.answer}">${esc(t("a-" + a.answer))}</b>${a.note ? `<small dir="auto">${esc(a.note)}</small>` : ""}</li>`).join("");
-  const left = 20 - Q20.asked.length;
+  const left = Q20_MAX - Q20.asked.length;
   $("#q20-form").hidden = Q20.done;
   $("#q20-give-up").hidden = Q20.done || !Q20.asked.length;
   $("#q20-q").placeholder = t("q20-placeholder");
   $("#q20-left").textContent = Q20.done ? "" : t("q20-left", { n: left });
   const p = Q20.paper;
+  if (Q20.done) record("q20", { day: Q20.day, won: Q20.won, questions: Q20.asked.length });
   $("#q20-end").innerHTML = Q20.done && p ? `<div class="reveal ${Q20.won ? "won" : ""}"><b>${esc(Q20.won ? t("q20-won", { n: Q20.asked.length }) : t("q20-lost"))}</b>
-      <div class="h" dir="auto">${p.url ? `<a href="${esc(safeUrl(p.url))}" target="_blank" rel="noopener">${esc(p.title)}</a>` : esc(p.title)}</div><div class="m">${esc(p.cite)}${p.venue ? " · " + esc(p.venue) : ""}</div></div>` : "";
+      <div class="h" dir="auto">${p.url ? `<a href="${esc(safeUrl(p.url))}" target="_blank" rel="noopener">${esc(p.title)}</a>` : esc(p.title)}</div><div class="m">${esc(p.cite)}${p.venue ? " · " + esc(p.venue) : ""}</div></div>${statsHTML("q20")}` : "";
 }
 $("#q20-form").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -457,7 +531,7 @@ $("#q20-form").addEventListener("submit", async (e) => {
   if (!r || r.error) { $("#q20-list .asking")?.remove(); $("#q20-intro").textContent = r?.error || t("timeout"); return; }
   Q20.asked.push({ q, answer: r.answer, note: r.note || "" });
   if (r.named) Object.assign(Q20, { done: true, won: true, paper: r.paper });
-  else if (Q20.asked.length >= 20) await revealQ20();
+  else if (Q20.asked.length >= Q20_MAX) await revealQ20();
   store.set("q20", Q20);
   paintQ20();
 });
@@ -478,7 +552,7 @@ async function loadConn() {
     const r = await requestJSON({ type: "connections" }, 90000);
     if (!r || r.error) { $("#conn-grid").innerHTML = `<p class="err">${esc(r?.error || t("timeout"))}</p>`; return; }
     const words = r.groups.flatMap((g) => g.words).sort(() => Math.random() - 0.5);
-    CN = { day: today(), groups: r.groups, order: words, solved: [], mistakes: 4, picked: [] };
+    CN = { day: today(), groups: r.groups, level: r.level || "medium", order: words, solved: [], mistakes: 4, picked: [], hint: null };
     store.set("conn", CN);
   }
   CN.picked = [];
@@ -486,10 +560,15 @@ async function loadConn() {
 }
 function paintConn(note = "") {
   const solvedWords = new Set(CN.solved.flatMap((i) => CN.groups[i].words));
+  const hinted = new Set(CN.hint || []);
   $("#conn-solved").innerHTML = CN.solved.map((i) => `<div class="group g${i}"><b dir="auto">${esc(CN.groups[i].name)}</b><span dir="auto">${CN.groups[i].words.map(esc).join(", ")}</span></div>`).join("");
   const over = CN.solved.length === 4 || CN.mistakes <= 0;
   $("#conn-grid").innerHTML = over ? "" : CN.order.filter((w) => !solvedWords.has(w)).map((w) =>
-    `<button type="button" class="tile" aria-pressed="${CN.picked.includes(w)}" data-word="${esc(w)}" dir="auto">${esc(w)}</button>`).join("");
+    `<button type="button" class="tile${hinted.has(w) ? " hinted" : ""}" aria-pressed="${CN.picked.includes(w)}" data-word="${esc(w)}" dir="auto">${esc(w)}</button>`).join("");
+  $("#conn-level").textContent = t("level-" + (CN.level || "medium"));
+  $("#conn-hint").hidden = over || !!CN.hint;
+  if (over) record("conn", { day: CN.day, won: CN.solved.length === 4 && CN.mistakes > 0, mistakes: 4 - CN.mistakes, hints: CN.hint ? 1 : 0 });
+  $("#conn-stats").innerHTML = over ? statsHTML("conn") : "";
   $("#conn-mistakes").textContent = note || (over ? (CN.solved.length === 4 ? t("conn-won") : t("conn-lost")) : t("mistakes", { n: "●".repeat(CN.mistakes) }));
   $("#conn-submit").disabled = CN.picked.length !== 4 || over;
   $("#conn-shuffle").hidden = $("#conn-clear").hidden = $("#conn-submit").hidden = over;
@@ -500,6 +579,8 @@ document.addEventListener("click", (e) => {
   const w = b.dataset.word;
   CN.picked = CN.picked.includes(w) ? CN.picked.filter((x) => x !== w) : CN.picked.length < 4 ? [...CN.picked, w] : CN.picked;
   paintConn();
+  // The last group: picking its four is enough.
+  if (CN.solved.length === 3 && CN.picked.length === 4) $("#conn-submit").click();
 });
 $("#conn-shuffle").addEventListener("click", () => { CN.order.sort(() => Math.random() - 0.5); store.set("conn", CN); paintConn(); });
 $("#conn-clear").addEventListener("click", () => { CN.picked = []; paintConn(); });
@@ -507,11 +588,21 @@ $("#conn-submit").addEventListener("click", () => {
   const i = CN.groups.findIndex((g) => g.words.every((w) => CN.picked.includes(w)));
   if (i >= 0) { CN.solved.push(i); CN.picked = []; store.set("conn", CN); paintConn(); return; }
   const near = CN.groups.some((g) => g.words.filter((w) => CN.picked.includes(w)).length === 3);
+  // A wrong four: they flash red and shake, then let go.
+  $$(".tile[aria-pressed=true]").forEach((el) => el.classList.add("wrong"));
   CN.mistakes -= 1;
   if (CN.mistakes <= 0) CN.solved = [...CN.solved, ...CN.groups.map((_, j) => j).filter((j) => !CN.solved.includes(j))];
   CN.picked = [];
   store.set("conn", CN);
-  paintConn(CN.mistakes > 0 && near ? t("one-away") : "");
+  setTimeout(() => paintConn(CN.mistakes > 0 ? (near ? t("one-away") : t("not-group")) : ""), 650);
+});
+// The one hint: two terms of a group not found yet.
+$("#conn-hint").addEventListener("click", () => {
+  const open = CN.groups.map((g, i) => i).filter((i) => !CN.solved.includes(i));
+  const g = CN.groups[open[Math.floor(Math.random() * open.length)]];
+  CN.hint = g.words.slice().sort(() => Math.random() - 0.5).slice(0, 2);
+  store.set("conn", CN);
+  paintConn();
 });
 
 // ---------- views and the side menu ----------
@@ -524,7 +615,7 @@ function showView(name) {
   closeMenu();
   if (name === "radar") loadRadar();
   if (name === "history") loadConvs();
-  if (name === "learn") loadLearn();
+  if (name === "learn") learnStart();
   if (name === "q20") loadQ20();
   if (name === "conn") loadConn();
   if (name === "settings") { paintFacts(); paintLangSeg(); }

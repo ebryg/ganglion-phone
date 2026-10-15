@@ -181,3 +181,31 @@ body.menu-open .scrim { opacity: 1; }
 /* The one sentence to remember in an answer (rare): a highlighter in Ganglion's violet, unlike the citation chips */
 .key-line { background: linear-gradient(transparent 12%, rgba(168, 139, 219, .30) 12%, rgba(168, 139, 219, .30) 92%, transparent 92%); color: inherit; padding: 0 2px; border-radius: 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 @media (prefers-color-scheme: dark) { .key-line { background: linear-gradient(transparent 12%, rgba(168, 139, 219, .28) 12%, rgba(168, 139, 219, .28) 92%, transparent 92%); } }
+
+/* Quartets: the hinted pair, a wrong four, today's level; stats after a game */
+.tile.hinted { box-shadow: inset 0 0 0 2px var(--accent); }
+.tile.wrong { background: #E8B4AE !important; color: #6B1E14 !important; animation: shake .45s; }
+@keyframes shake { 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
+.level { font: 600 12px var(--sans); color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
+.stats { display: grid; gap: 8px; padding: 14px; border-radius: 14px; background: var(--sunken); }
+.stats h3 { margin: 0; }
+.stat-nums { display: flex; gap: 24px; }
+.stat-nums div { display: grid; }
+.stat-nums b { font: 500 1.6rem var(--display); }
+.stat-nums span, .stat-line { font-size: 13px; color: var(--muted); }
+.bar-row { display: grid; grid-template-columns: 4.5em 1fr 2em; align-items: center; gap: 8px; font-size: 13px; }
+.stat-bar { height: 14px; border-radius: 4px; background: var(--bg); overflow: hidden; }
+.stat-bar i { display: block; height: 100%; background: var(--accent); border-radius: 4px; }
+.bar-row b { text-align: end; font-weight: 600; }
+
+/* Selecting text inside a highlighted sentence: a colour of its own, so the selection shows on the highlight */
+.key-line::selection, .key-line *::selection { background: #5E3F93; color: #FFFFFF; }
+
+/* Something to learn, chosen together */
+.options { display: grid; gap: 8px; }
+.option { border: 1px solid var(--line); background: var(--bg); border-radius: 14px; padding: 12px 14px; text-align: start; font-size: 15.5px; color: var(--ink); }
+.option:active { border-color: var(--accent); background: var(--accent-soft); }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; font-size: 12.5px; color: var(--accent); }
+.crumbs span { background: var(--accent-soft); border-radius: 999px; padding: 2px 9px; }
+.crumbs i { color: var(--muted); font-style: normal; }
+.row-btns.start { justify-content: flex-start; }
