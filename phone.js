@@ -29,7 +29,7 @@ const T = {
   "ask-placeholder": ["Ask about your papers", "שאל על המאמרים שלך"], "reply": ["Reply", "תגובה"],
   "search-placeholder": ["Search your library", "חיפוש בספרייה"],
   "new-q": ["New conversation", "שיחה חדשה"], "history": ["Past conversations", "שיחות קודמות"], "radar": ["Radar", "רדאר"],
-  "library": ["Library", "ספרייה"], "bored": ["Default mode", "מצב ברירת מחדל"], "settings": ["Settings", "הגדרות"],
+  "library": ["Library", "ספרייה"], "bored": ["I’m bored", "משעמם לי"], "settings": ["Settings", "הגדרות"],
   "refresh": ["Refresh", "רענן"], "unpair": ["Unpair this phone", "נתק את הטלפון"], "unpair-confirm": ["Tap again to unpair", "לחץ שוב לניתוק"],
   "connecting": ["Connecting…", "מתחבר…"], "online": ["Computer online", "המחשב מחובר"], "offline": ["Computer not answering", "המחשב לא עונה"],
   "offline-long": ["Your computer isn’t answering. It needs to be on, with Ganglion running.", "המחשב לא עונה. הוא צריך להיות דלוק, עם גנגליון פועל."],
@@ -40,7 +40,7 @@ const T = {
   "brief": ["Brief", "קצר"], "brief-sub": ["Short answers, the main points only.", "תשובות קצרות, רק העיקר."],
   "ste-sub": ["Simplified Technical English: short, plain sentences.", "אנגלית טכנית פשוטה: משפטים קצרים וברורים."],
   "computer": ["Your computer", "המחשב שלך"], "status": ["Status", "מצב"], "name": ["Name", "שם"], "ai": ["AI", "AI"], "papers": ["Papers", "מאמרים"],
-  "bored-lede": ["The mind is wandering? Let your library surprise you (your default mode network would approve).", "המחשבות נודדות? תן לספרייה שלך להפתיע אותך (רשת ברירת המחדל שלך הייתה מאשרת)."],
+  "bored-lede": ["Bored? Let your library surprise you (your default mode network would approve).", "משעמם? תן לספרייה שלך להפתיע אותך (רשת ברירת המחדל שלך הייתה מאשרת)."],
   "learn": ["Something to learn", "משהו ללמוד"], "learn-sub": ["One interesting thing from a random paper in your library.", "דבר מעניין אחד ממאמר אקראי בספרייה שלך."],
   "q20": ["Who am I?", "מי אני?"], "q20-sub": ["I’m a paper in your library. Find me in 21 yes/no questions. A new one every day.", "אני מאמר בספרייה שלך. מצא אותי ב־21 שאלות כן/לא. חדש כל יום."],
   "conn-game": ["Quartets", "רביעיות"], "conn-sub": ["16 terms from your field in 4 hidden groups of 4. New every day, some days easy, some hard.", "16 מונחים מהתחום שלך ב־4 קבוצות נסתרות של 4. חדש כל יום, לפעמים קל ולפעמים קשה."],
@@ -208,6 +208,7 @@ function tex(s, display) {
 // The same reading as on the computer: code and formulas set aside first, then blocks (headings, tables, lists that
 // keep their numbers, paragraphs), then citations and emphasis inside each.
 function markdown(src, cites = {}, urls = {}) {
+  src = String(src || "").replace(/\[\[\s*fig(?:ure)?\s*:.*?\]\]\]?\n?/gi, "");  // a figure the answer shows: only the main window shows images
   const kept = [];
   const hold = (html) => `\u0000${kept.push(html) - 1}\u0000`;
   src = src.replace(/<think>[\s\S]*?(<\/think>|$)/g, "");
@@ -411,7 +412,7 @@ async function loadConvs() {
 }
 document.addEventListener("click", (e) => { const b = e.target.closest("[data-conv]"); if (b) openConversation(b.dataset.conv); });
 
-// ---------- Default mode: something to learn, chosen together (a few taps), or a surprise ----------
+// ---------- I’m bored: something to learn, chosen together (a few taps), or a surprise ----------
 const LEARN = { path: [] };
 const FIRST = ["l-math", "l-theory", "l-method", "l-finding", "l-beyond", "l-surprise"];
 function learnStart() {
@@ -471,7 +472,7 @@ async function loadLearn() {
     ${r.url ? `<a class="btn quiet" href="${esc(safeUrl(r.url))}" target="_blank" rel="noopener">${esc(t("open-paper"))}</a>` : ""}</article>`;
 }
 
-// ---------- Default mode: stats of past games (kept on this phone), shown when a game ends ----------
+// ---------- I’m bored: stats of past games (kept on this phone), shown when a game ends ----------
 function record(game, entry) {
   const all = store.get("stats-" + game) || [];
   if (!all.some((x) => x.day === entry.day)) { all.push(entry); store.set("stats-" + game, all.slice(-365)); }
@@ -492,7 +493,7 @@ function statsHTML(game) {
     ${hints}</section>`;
 }
 
-// ---------- Default mode: today's Who am I? (kept for the day on this phone) ----------
+// ---------- I’m bored: today's Who am I? (kept for the day on this phone) ----------
 const today = () => new Date().toISOString().slice(0, 10);
 let Q20 = null;
 const Q20_MAX = 21;
