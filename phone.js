@@ -222,6 +222,7 @@ function markdown(src, cites = {}, urls = {}) {
   src = src.replace(/\\\((.+?)\\\)|(?<![\\$\w])\$(?=\S)([^$\n]+?)(?<=\S)\$(?![A-Za-z_$])/g, (m, a, b) =>
     b !== undefined && /^[\d.,\s]+$/.test(b) ? m : hold(tex(a ?? b, false)));
   const inline = (x) => x
+    .replace(/\[([^\]\n]+)\]\((https?:\/\/[^)\s]+)\)/g, (_, label, url) => `<a href="${safeUrl(url)}" target="_blank" rel="noopener">${label}</a>`)  // a paper outside the library
     .replace(/\[@([A-Z0-9]{8})\]/g, (_, k) => urls[k] ? `<a class="cite" href="${esc(safeUrl(urls[k]))}" target="_blank" rel="noopener">${esc(cites[k] || k)}</a>` : `<span class="cite">${esc(cites[k] || k)}</span>`)
     .replace(/==([^=\n]{3,400}?)==/g, '<mark class="key-line">$1</mark>')
     .replace(/\*\*((?:[^*]|\*(?!\*))+?)\*\*/g, "<strong>$1</strong>").replace(/(^|[^*])\*([^*\s][^*]*)\*/g, "$1<em>$2</em>");
