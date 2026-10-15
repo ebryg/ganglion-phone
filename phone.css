@@ -209,3 +209,12 @@ body.menu-open .scrim { opacity: 1; }
 .crumbs span { background: var(--accent-soft); border-radius: 999px; padding: 2px 9px; }
 .crumbs i { color: var(--muted); font-style: normal; }
 .row-btns.start { justify-content: flex-start; }
+
+/* Who am I?: how close the player is, from cold to hot */
+.warmth { display: flex; align-items: center; gap: 10px; margin: 2px 0 12px; }
+.warmth-bar { flex: 1; height: 8px; border-radius: 999px; background: var(--sunken); overflow: hidden; }
+.warmth-bar i { display: block; height: 100%; border-radius: 999px; transition: width .6s ease;
+  background: linear-gradient(90deg, #5B8DEF, #A88BDB 45%, #F2994A 75%, #E5484D); background-size: 100vw 100%; }
+.warmth span { font-size: 13px; font-weight: 600; min-width: 7.5em; text-align: end; color: var(--muted); }
+.warmth[data-level="w-warm"] span { color: #C77C2E; }
+.warmth[data-level="w-hot"] span, .warmth[data-level="w-burning"] span { color: #E5484D; }

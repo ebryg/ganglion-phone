@@ -53,7 +53,7 @@ const T = {
   "talk-about": ["Talk about it", "בוא נדבר על זה"], "start-over": ["Start over", "מההתחלה"], "open-paper": ["Open the paper", "פתח את המאמר"],
   "q20-placeholder": ["A yes/no question, or “Is it …?”", "שאלת כן/לא, או „זה …?”"], "give-up": ["Give up and show the paper", "וותר והראה את המאמר"],
   "q20-intro": ["I’m one of the {n} papers in your library. Ask me yes/no questions; name me (my first author is enough) to win.", "אני אחד מ־{n} המאמרים בספרייה שלך. שאל אותי שאלות כן/לא; נקוב בשמי (מספיק המחבר הראשון) כדי לנצח."],
-  "q20-won": ["You got it in {n}!", "ניחשת ב־{n}!"], "q20-lost": ["It was:", "זה היה:"], "q20-left": ["{n} questions left", "נשארו {n} שאלות"],
+  "q20-won": ["You got it in {n}!", "ניחשת ב־{n}!"], "q20-lost": ["It was:", "זה היה:"], "q20-left": ["{n} questions left", "נשארו {n} שאלות"], "w-cold": ["Cold", "קר"], "w-tepid": ["Getting warmer", "מתחמם"], "w-warm": ["Warm", "חם"], "w-hot": ["Hot!", "חם מאוד!"], "w-burning": ["Burning! One more…", "בוער! עוד אחת…"],
   "a-yes": ["Yes", "כן"], "a-no": ["No", "לא"], "a-partly": ["Partly", "חלקית"], "a-unclear": ["Can’t tell", "אי אפשר לדעת"],
   "conn-how": ["Find the 4 groups of 4 terms that belong together.", "מצא את 4 הקבוצות של 4 מונחים ששייכים יחד."],
   "shuffle": ["Shuffle", "ערבב"], "clear": ["Clear", "נקה"], "submit": ["Submit", "בדוק"],
@@ -513,6 +513,16 @@ function paintQ20() {
   $("#q20-intro").textContent = t("q20-intro", { n: Q20.papers });
   $("#q20-list").innerHTML = Q20.asked.map((a) => `<li><span dir="auto">${esc(a.q)}</span><b class="ans ${a.answer}">${esc(t("a-" + a.answer))}</b>${a.note ? `<small dir="auto">${esc(a.note)}</small>` : ""}</li>`).join("");
   const left = Q20_MAX - Q20.asked.length;
+  // How close: from cold to hot, judged on everything asked so far (the computer's AI knows the answer).
+  const w = [...Q20.asked].reverse().find((a) => typeof a.warmth === "number");
+  $("#q20-warmth").hidden = !w;
+  if (w) {
+    const prev = Q20.asked.filter((a) => typeof a.warmth === "number").slice(-2, -1)[0];
+    const level = w.warmth >= 90 ? "w-burning" : w.warmth >= 70 ? "w-hot" : w.warmth >= 45 ? "w-warm" : w.warmth >= 20 ? "w-tepid" : "w-cold";
+    $("#q20-warmth i").style.width = Math.max(4, w.warmth) + "%";
+    $("#q20-warmth").dataset.level = level;
+    $("#q20-warmth span").textContent = t(level) + (prev && w.warmth > prev.warmth ? " ↑" : prev && w.warmth < prev.warmth ? " ↓" : "");
+  }
   $("#q20-form").hidden = Q20.done;
   $("#q20-give-up").hidden = Q20.done || !Q20.asked.length;
   $("#q20-q").placeholder = t("q20-placeholder");
@@ -528,9 +538,10 @@ $("#q20-form").addEventListener("submit", async (e) => {
   if (!q || Q20.done) return;
   $("#q20-q").value = "";
   $("#q20-list").insertAdjacentHTML("beforeend", `<li class="asking"><span dir="auto">${esc(q)}</span><span class="wait"></span></li>`);
-  const r = await requestJSON({ type: "q20", q }, 60000);
+  // The earlier questions go along: the answer to "how close am I" depends on all of them.
+  const r = await requestJSON({ type: "q20", q, history: Q20.asked.map((a) => ({ q: a.q, answer: a.answer })) }, 60000);
   if (!r || r.error) { $("#q20-list .asking")?.remove(); $("#q20-intro").textContent = r?.error || t("timeout"); return; }
-  Q20.asked.push({ q, answer: r.answer, note: r.note || "" });
+  Q20.asked.push({ q, answer: r.answer, note: r.note || "", warmth: typeof r.warmth === "number" ? r.warmth : null });
   if (r.named) Object.assign(Q20, { done: true, won: true, paper: r.paper });
   else if (Q20.asked.length >= Q20_MAX) await revealQ20();
   store.set("q20", Q20);
