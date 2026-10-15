@@ -40,7 +40,6 @@ const T = {
   "brief": ["Brief", "קצר"], "brief-sub": ["Short answers, the main points only.", "תשובות קצרות, רק העיקר."],
   "ste-sub": ["Simplified Technical English: short, plain sentences.", "אנגלית טכנית פשוטה: משפטים קצרים וברורים."],
   "computer": ["Your computer", "המחשב שלך"], "status": ["Status", "מצב"], "name": ["Name", "שם"], "ai": ["AI", "AI"], "papers": ["Papers", "מאמרים"],
-  "bored-lede": ["Bored? Let your library surprise you (your default mode network would approve).", "משעמם? תן לספרייה שלך להפתיע אותך (רשת ברירת המחדל שלך הייתה מאשרת)."],
   "learn": ["Something to learn", "משהו ללמוד"], "learn-sub": ["One interesting thing from a random paper in your library.", "דבר מעניין אחד ממאמר אקראי בספרייה שלך."],
   "q20": ["Who am I?", "מי אני?"], "q20-sub": ["I’m a paper in your library. Find me in 21 yes/no questions. A new one every day.", "אני מאמר בספרייה שלך. מצא אותי ב־21 שאלות כן/לא. חדש כל יום."],
   "conn-game": ["Quartets", "רביעיות"], "conn-sub": ["16 terms from your field in 4 hidden groups of 4. New every day, some days easy, some hard.", "16 מונחים מהתחום שלך ב־4 קבוצות נסתרות של 4. חדש כל יום, לפעמים קל ולפעמים קשה."],
