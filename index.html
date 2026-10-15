@@ -10,6 +10,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <link rel="stylesheet" href="vendor/katex/katex.min.css">
   <link rel="stylesheet" href="phone.css">
@@ -34,10 +35,11 @@
   </svg>
 
   <header class="bar">
+    <button class="icon-btn" id="menu-btn" type="button" aria-label="Menu" aria-controls="menu" aria-expanded="false" hidden>
+      <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     <svg class="mark" aria-hidden="true"><use href="#mark"/></svg>
-    <span class="name">Ganglion</span>
-    <span class="conn" id="conn"><span class="dot"></span><span id="conn-text"></span></span>
-    <button class="lang" id="lang" type="button">עב</button>
+    <span class="name" id="view-name">Ganglion</span>
+    <span class="conn" id="conn" title=""><span class="dot"></span></span>
   </header>
 
   <!-- Not paired yet -->
@@ -46,37 +48,104 @@
     <h1 data-t="pair-title">Pair with your computer</h1>
     <p data-t="pair-how">On your computer, open Ganglion → Settings → Phone → Pair this phone, and scan the code with this phone’s camera.</p>
     <p class="fine" data-t="pair-private">The code holds a key that never leaves your two devices. Messages between them are end-to-end encrypted.</p>
+    <button class="link" type="button" data-lang-toggle></button>
   </main>
 
   <!-- Paired -->
   <main class="app" id="app" hidden>
-    <nav class="tabs" role="tablist">
-      <button role="tab" data-tab="ask" aria-selected="true" data-t="tab-ask">Ask</button>
-      <button role="tab" data-tab="briefing" aria-selected="false" data-t="tab-briefing">Updates</button>
-      <button role="tab" data-tab="library" aria-selected="false" data-t="tab-library">Library</button>
-    </nav>
-
-    <section class="panel" id="tab-ask">
-      <div class="thread" id="thread"></div>
+    <!-- The conversation: the whole screen -->
+    <section class="view" id="view-chat">
+      <div class="thread" id="thread">
+        <div class="hello" id="hello">
+          <svg class="hello-mark" aria-hidden="true"><use href="#mark"/></svg>
+          <p data-t="hello">Ask about your papers. Your computer reads them; the answer comes here.</p>
+        </div>
+      </div>
       <form class="composer" id="ask-form">
         <textarea id="q" dir="auto" rows="1" data-tp="ask-placeholder" placeholder="Ask about your papers"></textarea>
         <button class="send" type="submit" aria-label="Send"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
       </form>
-      <button class="link" type="button" id="new-q" hidden data-t="new-q">New question</button>
     </section>
 
-    <section class="panel" id="tab-briefing" hidden>
+    <section class="view" id="view-radar" hidden>
       <div id="briefing"></div>
       <button class="link" type="button" id="refresh-briefing" data-t="refresh">Refresh</button>
     </section>
 
-    <section class="panel" id="tab-library" hidden>
+    <section class="view" id="view-library" hidden>
       <form id="search-form" class="search"><input id="s" type="search" dir="auto" data-tp="search-placeholder" placeholder="Search your library"></form>
       <ol class="results" id="results"></ol>
     </section>
 
-    <footer class="foot"><button class="link quiet" type="button" id="unpair" data-t="unpair">Unpair this phone</button></footer>
+    <section class="view" id="view-history" hidden>
+      <ol class="results" id="convs"></ol>
+    </section>
+
+    <section class="view" id="view-bored" hidden>
+      <p class="lede" data-t="bored-lede">A few minutes? Let your library surprise you.</p>
+      <button class="card-btn" type="button" data-go="learn"><b data-t="learn">Something to learn</b><span data-t="learn-sub">One interesting thing from a random paper in your library.</span></button>
+      <button class="card-btn" type="button" data-go="q20"><b data-t="q20">20 questions</b><span data-t="q20-sub">Ganglion picks a paper from your library. Guess it in 20 yes/no questions. New every day.</span></button>
+      <button class="card-btn" type="button" data-go="conn"><b data-t="conn-game">Connections</b><span data-t="conn-sub">16 terms from your field in 4 hidden groups of 4. New every day.</span></button>
+    </section>
+
+    <section class="view" id="view-learn" hidden>
+      <div id="learn-box"></div>
+      <button class="btn" type="button" id="learn-more" data-t="another">Another one</button>
+    </section>
+
+    <section class="view" id="view-q20" hidden>
+      <p class="lede" id="q20-intro"></p>
+      <ol class="q20-list" id="q20-list"></ol>
+      <div id="q20-end"></div>
+      <p class="mistakes" id="q20-left"></p>
+      <form class="composer" id="q20-form">
+        <textarea id="q20-q" dir="auto" rows="1" data-tp="q20-placeholder" placeholder="A yes/no question, or “Is it …?”"></textarea>
+        <button class="send" type="submit" aria-label="Ask"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+      </form>
+      <button class="link quiet" type="button" id="q20-give-up" data-t="give-up">Give up and show the paper</button>
+    </section>
+
+    <section class="view" id="view-conn" hidden>
+      <p class="lede" data-t="conn-how">Find the 4 groups of 4 terms that belong together.</p>
+      <div id="conn-solved"></div>
+      <div class="grid" id="conn-grid"></div>
+      <p class="mistakes" id="conn-mistakes"></p>
+      <div class="row-btns">
+        <button class="btn quiet" type="button" id="conn-shuffle" data-t="shuffle">Shuffle</button>
+        <button class="btn quiet" type="button" id="conn-clear" data-t="clear">Clear</button>
+        <button class="btn" type="button" id="conn-submit" data-t="submit" disabled>Submit</button>
+      </div>
+    </section>
+
+    <section class="view" id="view-settings" hidden>
+      <h3 data-t="language">Language</h3>
+      <div class="seg" id="lang-seg"><button type="button" data-lang="en">English</button><button type="button" data-lang="he">עברית</button></div>
+      <button class="link" type="button" id="lang-request" data-t="lang-request">Ask for another language</button>
+      <h3 data-t="answers">Answers</h3>
+      <label class="switch-row"><span><b data-t="brief">Brief</b><small data-t="brief-sub">Short answers, the main points only.</small></span><input type="checkbox" data-style="answer_brief"></label>
+      <label class="switch-row"><span><b>STE</b><small data-t="ste-sub">Simplified Technical English: short, plain sentences.</small></span><input type="checkbox" data-style="answer_ste"></label>
+      <h3 data-t="computer">Your computer</h3>
+      <dl class="facts" id="facts"></dl>
+      <button class="link quiet" type="button" id="unpair" data-t="unpair">Unpair this phone</button>
+    </section>
   </main>
+
+  <!-- The side menu -->
+  <div class="scrim" id="scrim" hidden></div>
+  <nav class="menu" id="menu" aria-label="Menu" hidden>
+    <div class="menu-head"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg><span class="name">Ganglion</span></div>
+    <div class="menu-styles">
+      <label class="chip-switch"><input type="checkbox" data-style="answer_brief"><span data-t="brief">Brief</span></label>
+      <label class="chip-switch"><input type="checkbox" data-style="answer_ste"><span>STE</span></label>
+    </div>
+    <button type="button" class="menu-item" data-view="new"><span>＋</span><span data-t="new-q">New conversation</span></button>
+    <button type="button" class="menu-item" data-view="history"><span>☰</span><span data-t="history">Past conversations</span></button>
+    <button type="button" class="menu-item" data-view="radar"><span>◉</span><span data-t="radar">Radar</span></button>
+    <button type="button" class="menu-item" data-view="library"><span>⌕</span><span data-t="library">Library</span></button>
+    <button type="button" class="menu-item" data-view="bored"><span>✦</span><span data-t="bored">I’m bored</span></button>
+    <button type="button" class="menu-item" data-view="settings"><span>⚙</span><span data-t="settings">Settings</span></button>
+    <div class="menu-foot" id="menu-foot"></div>
+  </nav>
 
   <script src="vendor/katex/katex.min.js"></script>
   <script src="phone.js"></script>
