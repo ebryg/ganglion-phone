@@ -209,6 +209,10 @@ function tex(s, display) {
 // keep their numbers, paragraphs), then citations and emphasis inside each.
 function markdown(src, cites = {}, urls = {}) {
   src = String(src || "").replace(/\[\[\s*fig(?:ure)?\s*:.*?\]\]\]?\n?/gi, "");  // a figure the answer shows: only the main window shows images
+  // Several papers in one bracket ("[@A, @B]"): one citation each.
+  src = src.replace(/\[@([A-Z0-9]{8})((?:\s*[,;]\s*@?[A-Z0-9]{8})+)\]/g, (_, a, rest) => [a, ...rest.match(/[A-Z0-9]{8}/g)].map((k) => `[@${k}]`).join(" "));
+  // A heading is its own block, even with its paragraph right under it.
+  src = src.replace(/^(#{1,6} [^\n]+)\n(?!\n)/gm, "$1\n\n");
   const kept = [];
   const hold = (html) => `\u0000${kept.push(html) - 1}\u0000`;
   src = src.replace(/<think>[\s\S]*?(<\/think>|$)/g, "");
@@ -238,6 +242,9 @@ function markdown(src, cites = {}, urls = {}) {
     if (lines.length > 1 && lines.every((l) => /^\s*\|.*\|\s*$/.test(l))) {
       const rows = lines.filter((l) => !/^\s*\|[\s:|-]+\|\s*$/.test(l)).map((l) => l.trim().slice(1, -1).split("|").map((c) => c.trim()));
       const [head, ...body] = rows;
+      // Three columns or more don't fit a phone: each row a card, its first cell the title, the others labelled.
+      if (head.length >= 3) return `<div class="tcards">${body.map((r) => `<div class="tcard"><div class="tcard-h">${inline(r[0] || "")}</div>${
+        head.slice(1).map((h, i) => (r[i + 1] || "").trim() ? `<div class="tcard-row"><span class="tl">${inline(h)}</span>${inline(r[i + 1])}</div>` : "").join("")}</div>`).join("")}</div>`;
       return `<div class="table"><table><thead><tr>${head.map((c) => `<th>${inline(c)}</th>`).join("")}</tr></thead><tbody>${body.map((r) => `<tr>${r.map((c) => `<td>${inline(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
     }
     if (lines.every((l) => item.test(l) || /^\s{2,}/.test(l))) {
