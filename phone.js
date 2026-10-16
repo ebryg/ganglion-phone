@@ -25,6 +25,7 @@ const T = {
     "במחשב, פתח את גנגליון ← הגדרות ← טלפון ← חבר את הטלפון, וסרוק את הקוד במצלמה של הטלפון הזה."],
   "pair-private": ["The code holds a key that never leaves your two devices. Messages between them are end-to-end encrypted.",
     "בקוד יש מפתח שלא יוצא משני המכשירים שלך. ההודעות ביניהם מוצפנות מקצה לקצה."],
+  "pair-again": ["Just signed in? Scan the code again: signing in drops it.", "רק נכנסת לחשבון? סרוק את הקוד שוב: הכניסה מוחקת אותו."],
   "hello": ["Ask about your papers. Your computer reads them; the answer comes here.", "שאל על המאמרים שלך. המחשב שלך קורא אותם, והתשובה מגיעה לכאן."],
   "ask-placeholder": ["Ask about your papers", "שאל על המאמרים שלך"], "reply": ["Reply", "תגובה"],
   "search-placeholder": ["Search your library", "חיפוש בספרייה"],
@@ -702,7 +703,8 @@ async function start() {
     history.replaceState(null, "", location.pathname);
   }
   LINK = store.get("pairing");
-  if (!LINK) { $("#pair").hidden = false; return; }
+  // On the shared server the page sits behind the institution's login, which drops the code's "#p=…" on the way.
+  if (!LINK) { $("#pair").hidden = false; $("#pair-again").hidden = location.hostname.endsWith("github.io"); return; }
   KEY = await crypto.subtle.importKey("raw", b64u.dec(LINK.k), "AES-GCM", false, ["encrypt", "decrypt"]);
   $("#app").hidden = false;
   $("#menu-btn").hidden = false;

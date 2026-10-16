@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0B0B0C" media="(prefers-color-scheme: dark)">
   <meta name="referrer" content="no-referrer">
-  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="mobile-web-app-capable" content="yes">
@@ -47,6 +47,7 @@
     <svg class="pair-mark" aria-hidden="true"><use href="#mark"/></svg>
     <h1 data-t="pair-title">Pair with your computer</h1>
     <p data-t="pair-how">On your computer, open Ganglion → Settings → Phone → Pair this phone, and scan the code with this phone’s camera.</p>
+    <p class="fine" data-t="pair-again" id="pair-again" hidden>Just signed in? Scan the code again: signing in drops it.</p>
     <p class="fine" data-t="pair-private">The code holds a key that never leaves your two devices. Messages between them are end-to-end encrypted.</p>
     <button class="link" type="button" data-lang-toggle></button>
   </main>
