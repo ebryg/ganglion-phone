@@ -96,7 +96,9 @@ const pending = new Map(); // request id -> handler
 
 async function send(obj) {
   const id = Math.random().toString(36).slice(2, 10);
-  await fetch(`${LINK.srv.replace(/\/$/, "")}/${LINK.up}`, { method: "POST", body: await seal({ ...obj, id, lang: HE ? "he" : "en" }) });
+  // t: when it was sent, inside the encryption: the computer refuses a request that is old or already handled
+  // (someone who learnt the channel's name can't make it run a request again by sending its copy).
+  await fetch(`${LINK.srv.replace(/\/$/, "")}/${LINK.up}`, { method: "POST", body: await seal({ ...obj, id, t: Date.now(), lang: HE ? "he" : "en" }) });
   return id;
 }
 
