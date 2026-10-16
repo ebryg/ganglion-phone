@@ -520,7 +520,7 @@ async function loadQ20() {
 }
 function paintQ20() {
   $("#q20-intro").textContent = t("q20-intro", { n: Q20.papers });
-  $("#q20-list").innerHTML = Q20.asked.map((a) => `<li><span dir="auto">${esc(a.q)}</span><b class="ans ${a.answer}">${esc(t("a-" + a.answer))}</b>${a.note ? `<small dir="auto">${esc(a.note)}</small>` : ""}</li>`).join("");
+  $("#q20-list").innerHTML = Q20.asked.map((a) => `<li><span dir="auto">${esc(a.q)}</span><b class="ans ${esc(a.answer)}">${esc(t("a-" + a.answer))}</b>${a.note ? `<small dir="auto">${esc(a.note)}</small>` : ""}</li>`).join("");
   const left = Q20_MAX - Q20.asked.length;
   // How close: from cold to hot, judged on everything asked so far (the computer's AI knows the answer).
   const w = [...Q20.asked].reverse().find((a) => typeof a.warmth === "number");
@@ -691,7 +691,14 @@ async function start() {
   // A fresh pairing arrives in the address after "#"; keep it, then clear it from the address bar.
   const m = location.hash.match(/#p=([A-Za-z0-9_-]+)/);
   if (m) {
-    try { store.set("pairing", JSON.parse(new TextDecoder().decode(b64u.dec(m[1])))); store.del("since"); store.del("conv"); conv = null; } catch {}
+    // A link can't quietly move a paired phone to another computer (or to someone else's relay): ask first.
+    try {
+      const fresh = JSON.parse(new TextDecoder().decode(b64u.dec(m[1]))), old = store.get("pairing");
+      const same = old && old.k === fresh.k && old.srv === fresh.srv;
+      if (!old || same || confirm(HE ? "לחבר את הטלפון למחשב חדש? החיבור הקודם יוחלף." : "Connect this phone to a new computer? The current connection will be replaced.")) {
+        if (!same) { store.set("pairing", fresh); store.del("since"); store.del("conv"); conv = null; }
+      }
+    } catch {}
     history.replaceState(null, "", location.pathname);
   }
   LINK = store.get("pairing");
