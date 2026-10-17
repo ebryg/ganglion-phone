@@ -305,8 +305,33 @@ function answerHTML(r) {
   return (r.text ? `<div class="answer" dir="auto">${markdown(r.text, r.cites || {}, r.urls || {})}</div>` : "")
     + (r.error ? `<p class="err" dir="auto">${esc(errorText(r.error))}</p>` : "")
     + (r.text ? `<div class="tools"><button type="button" class="mini" data-copy="${n}">⧉ <span>${esc(t("copy"))}</span></button></div>` : "")
+    + settingCards(r.settings)
     + ((r.suggestions || []).length ? `<div class="follow">${r.suggestions.map((s) => `<button type="button" class="chip" data-ask="${esc(s.question)}" dir="auto">${esc(s.label)}</button>`).join("")}</div>` : "");
 }
+
+// A setting the researcher asked to change in the conversation: a card, filled in, saved only by their tap.
+function settingCards(cards) {
+  return (cards || []).map((c) => {
+    const control = c.kind === "bool"
+      ? `<label class="set-check"><input type="checkbox" ${c.value ? "checked" : ""}> ${esc(HE ? "פעיל" : "On")}</label>`
+      : c.kind === "choice"
+        ? `<select>${Object.entries(c.choices || {}).map(([k, v]) => `<option value="${esc(k)}" ${k === c.value ? "selected" : ""}>${esc(v)}</option>`).join("")}</select>`
+        : `<input type="text" dir="auto" maxlength="60" value="${esc(c.value)}">`;
+    return `<div class="set-card" data-setting="${esc(c.setting)}" data-kind="${esc(c.kind)}"><b dir="auto">${esc(c.label)}</b>${control}`
+      + `<button type="button" class="mini" data-save-setting>${esc(HE ? "שמור" : "Save")}</button></div>`;
+  }).join("");
+}
+
+document.addEventListener("click", async (e) => {
+  const b = e.target.closest("[data-save-setting]");
+  if (!b) return;
+  const card = b.closest(".set-card"), el = card.querySelector("input, select");
+  const value = card.dataset.kind === "bool" ? el.checked : el.value.trim();
+  if (value === "") return;
+  b.disabled = true;
+  try { await request({ type: "settings", set: { [card.dataset.setting]: value } }, null, 20000); b.textContent = HE ? "נשמר" : "Saved"; }
+  catch { b.disabled = false; }
+});
 
 async function ask(q) {
   q = q.trim();
