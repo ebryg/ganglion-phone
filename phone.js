@@ -23,14 +23,15 @@ const T = {
   "pair-title": ["Pair with your computer", "חיבור למחשב שלך"],
   "pair-how": ["On your computer, open Ganglion → Settings → Phone → Pair this phone, and scan the code with this phone’s camera.",
     "במחשב, פתח את גנגליון ← הגדרות ← טלפון ← חבר את הטלפון, וסרוק את הקוד במצלמה של הטלפון הזה."],
-  "pair-private": ["The code holds a key that never leaves your two devices. Messages between them are end-to-end encrypted.",
-    "בקוד יש מפתח שלא יוצא משני המכשירים שלך. ההודעות ביניהם מוצפנות מקצה לקצה."],
+  "pair-private": ["The code holds the key that encrypts the messages between this phone and Ganglion. Keep it private.", "בקוד יש את המפתח שמצפין את ההודעות בין הטלפון הזה לגנגליון. שמור אותו לעצמך."],
   "pair-again": ["Just signed in? Scan the code again: signing in drops it.", "רק נכנסת לחשבון? סרוק את הקוד שוב: הכניסה מוחקת אותו."],
   "hello": ["Ask about your papers. Your computer reads them; the answer comes here.", "שאל על המאמרים שלך. המחשב שלך קורא אותם, והתשובה מגיעה לכאן."],
   "ask-placeholder": ["Ask about your papers", "שאל על המאמרים שלך"], "reply": ["Reply", "תגובה"],
   "search-placeholder": ["Search your library", "חיפוש בספרייה"],
   "new-q": ["New conversation", "שיחה חדשה"], "history": ["Past conversations", "שיחות קודמות"], "radar": ["Radar", "רדאר"],
-  "library": ["Library", "ספרייה"], "bored": ["I’m bored", "משעמם לי"], "settings": ["Settings", "הגדרות"],
+  "library": ["Library", "ספרייה"], "bored": ["Learn and play", "ללמוד ולשחק"], "learn-menu": ["Something to learn", "משהו ללמוד"],
+  "games": ["Games", "משחקים"], "games-on": ["Daily games", "משחקים יומיים"],
+  "games-sub": ["Who am I? and Quartets, built from your library. A new one each day.", "מי אני? ורביעיות, מתוך הספרייה שלך. חדש בכל יום."], "settings": ["Settings", "הגדרות"],
   "refresh": ["Refresh", "רענן"], "unpair": ["Unpair this phone", "נתק את הטלפון"], "unpair-confirm": ["Tap again to unpair", "לחץ שוב לניתוק"],
   "connecting": ["Connecting…", "מתחבר…"], "online": ["Computer online", "המחשב מחובר"], "offline": ["Computer not answering", "המחשב לא עונה"],
   "offline-long": ["Your computer isn’t answering. It needs to be on, with Ganglion running.", "המחשב לא עונה. הוא צריך להיות דלוק, עם גנגליון פועל."],
@@ -42,22 +43,22 @@ const T = {
   "ste-sub": ["Simplified Technical English: short, plain sentences.", "אנגלית טכנית פשוטה: משפטים קצרים וברורים."],
   "computer": ["Your computer", "המחשב שלך"], "status": ["Status", "מצב"], "name": ["Name", "שם"], "ai": ["AI", "AI"], "papers": ["Papers", "מאמרים"],
   "learn": ["Something to learn", "משהו ללמוד"], "learn-sub": ["One interesting thing from a random paper in your library.", "דבר מעניין אחד ממאמר אקראי בספרייה שלך."],
-  "q20": ["Who am I?", "מי אני?"], "q20-sub": ["I’m a paper in your library. Find me in 21 yes/no questions. A new one every day.", "אני מאמר בספרייה שלך. מצא אותי ב־21 שאלות כן/לא. חדש כל יום."],
+  "q20": ["Who am I?", "מי אני?"], "q20-sub": ["A paper from your library, chosen at random. Find it in 21 yes/no questions. A new one every day.", "מאמר אקראי מהספרייה שלך. מצא אותו ב־21 שאלות כן/לא. חדש בכל יום."],
   "conn-game": ["Quartets", "רביעיות"], "conn-sub": ["16 terms from your field in 4 hidden groups of 4. New every day, some days easy, some hard.", "16 מונחים מהתחום שלך ב־4 קבוצות נסתרות של 4. חדש כל יום, לפעמים קל ולפעמים קשה."],
   "hint": ["Hint: show a pair", "רמז: חשוף זוג"], "level-easy": ["Today: easy", "היום: קל"], "level-medium": ["Today: medium", "היום: בינוני"], "level-hard": ["Today: hard", "היום: קשה"],
   "not-group": ["Not a group", "לא קבוצה"], "stats": ["Your games", "המשחקים שלך"], "played": ["Played", "שוחקו"], "won": ["Won", "ניצחונות"],
   "by-mistakes": ["Mistakes per game", "טעויות במשחק"], "by-questions": ["Questions to find me", "שאלות עד שמצאת אותי"], "hints-used": ["Games with the hint", "משחקים עם רמז"], "not-found": ["not found", "לא נמצא"],
-  "another": ["Another one", "עוד אחד"], "learn-q": ["What would you like to learn today?", "מה בא לך ללמוד היום?"],
+  "another": ["Another one", "עוד אחד"], "learn-q": ["What would you like to learn about?", "על מה תרצה ללמוד?"],
   "l-math": ["Something mathematical", "משהו מתמטי"], "l-theory": ["A theory", "תיאוריה"], "l-method": ["A method", "שיטה"],
-  "l-finding": ["A finding in my field", "ממצא בתחום שלי"], "l-beyond": ["A bit beyond my field", "קצת מחוץ לתחום שלי"], "l-surprise": ["Surprise me", "תפתיע אותי"],
-  "talk-about": ["Talk about it", "בוא נדבר על זה"], "start-over": ["Start over", "מההתחלה"], "open-paper": ["Open the paper", "פתח את המאמר"],
-  "q20-placeholder": ["A yes/no question, or “Is it …?”", "שאלת כן/לא, או „זה …?”"], "give-up": ["Give up and show the paper", "וותר והראה את המאמר"],
-  "q20-intro": ["I’m one of the {n} papers in your library. Ask me yes/no questions; name me (my first author is enough) to win.", "אני אחד מ־{n} המאמרים בספרייה שלך. שאל אותי שאלות כן/לא; נקוב בשמי (מספיק המחבר הראשון) כדי לנצח."],
-  "q20-won": ["You got it in {n}!", "ניחשת ב־{n}!"], "q20-lost": ["It was:", "זה היה:"], "q20-left": ["{n} questions left", "נשארו {n} שאלות"], "w-cold": ["Cold", "קר"], "w-tepid": ["Getting warmer", "מתחמם"], "w-warm": ["Warm", "חם"], "w-hot": ["Hot!", "חם מאוד!"], "w-burning": ["Burning! One more…", "בוער! עוד אחת…"],
+  "l-finding": ["A finding in my field", "ממצא בתחום שלי"], "l-beyond": ["A bit beyond my field", "קצת מחוץ לתחום שלי"], "l-surprise": ["Anything", "משהו אקראי"],
+  "talk-about": ["Ask about it", "לשאול על זה"], "start-over": ["Start over", "מההתחלה"], "open-paper": ["Open the paper", "פתח את המאמר"],
+  "q20-placeholder": ["A yes/no question, or “Is it …?”", "שאלת כן/לא, או „זה …?”"], "give-up": ["Give up and show the paper", "ותר והראה את המאמר"],
+  "q20-intro": ["One of the {n} papers in your library. Ask yes/no questions, then name it (the first author is enough).", "אחד מ־{n} המאמרים בספרייה שלך. שאל שאלות כן/לא, ואז נקוב בשמו (מספיק המחבר הראשון)."],
+  "q20-won": ["Found in {n} questions", "נמצא ב־{n} שאלות"], "q20-lost": ["It was:", "זה היה:"], "q20-left": ["{n} questions left", "נשארו {n} שאלות"], "w-cold": ["Cold", "קר"], "w-tepid": ["Getting warmer", "מתחמם"], "w-warm": ["Warm", "חם"], "w-hot": ["Hot", "חם מאוד"], "w-burning": ["Very close", "קרוב מאוד"],
   "a-yes": ["Yes", "כן"], "a-no": ["No", "לא"], "a-partly": ["Partly", "חלקית"], "a-unclear": ["Can’t tell", "אי אפשר לדעת"],
   "conn-how": ["Find the 4 groups of 4 terms that belong together.", "מצא את 4 הקבוצות של 4 מונחים ששייכים יחד."],
   "shuffle": ["Shuffle", "ערבב"], "clear": ["Clear", "נקה"], "submit": ["Submit", "בדוק"],
-  "mistakes": ["Mistakes left: {n}", "טעויות שנשארו: {n}"], "one-away": ["One away…", "חסר אחד…"], "conn-won": ["Solved! Come back tomorrow for a new one.", "פתרת! חזור מחר לחדש."],
+  "mistakes": ["Mistakes left: {n}", "טעויות שנשארו: {n}"], "one-away": ["One away…", "חסר אחד…"], "conn-won": ["Solved. A new one tomorrow.", "נפתר. חדש מחר."],
   "conn-lost": ["Out of tries. Here are the groups.", "נגמרו הניסיונות. הנה הקבוצות."], "try-again": ["Try again", "נסה שוב"],
 };
 // Paired with the shared server (ELSC Apps Hub), which is always on: the same texts, without "your computer".
@@ -271,32 +272,16 @@ function markdown(src, cites = {}, urls = {}) {
 }
 
 // ---------- while the computer thinks: a light line that changes, as on the computer ----------
+// The general lines of the approved list (ganglion/waitlines.py, where they are kept: copied here by hand).
 const QUIPS = {
-  en: {
-    lines: ["Following the citations down the rabbit hole", "Reading the supplementary materials so you don't have to",
-            "Asking the abstract what it really meant", "Looking for the control condition", "Checking which way causality points",
-            "Separating what's shown from what's claimed", "Counting how many times “novel” appears", "Finding the n, then the other n",
-            "Reading the limitations section the authors hoped you'd skip", "Asking Figure 3 to testify", "Bribing Reviewer 2", "Consulting the hippocampus"],
-    act: ["Reading the methods section", "Checking the sample size", "Following every citation", "Comparing the error bars", "Re-reading the abstract",
-          "Tracing the claim back to its figure", "Reading the discussion", "Checking the statistics", "Looking at the control group", "Weighing the evidence"],
-    twist: ["like reviewer 2", "with a red pen", "twice, to be safe", "without trusting the abstract", "very respectfully", "before the coffee gets cold",
-            "slowly, like a postdoc on a Friday", "in triplicate", "while the PI isn't looking", "with healthy scepticism"],
-  },
-  he: {
-    lines: ["עוקב אחרי הציטוטים עמוק לתוך מחילת הארנב", "קורא את חומרי ההשלמה כדי שאתה לא תצטרך", "שואל את התקציר למה הוא באמת התכוון",
-            "מחפש את קבוצת הביקורת", "בודק לאיזה כיוון הסיבתיות הולכת", "מפריד בין מה שמוצג למה שנטען", "סופר כמה פעמים כתוב „חדשני”",
-            "מוצא את ה־n, ואז את ה־n השני", "מזמין את איור 3 להעיד", "משחד את סוקר מספר 2", "מתייעץ עם ההיפוקמפוס"],
-    act: ["קורא את פרק השיטות", "בודק את גודל המדגם", "עוקב אחרי כל ציטוט", "משווה את קווי השגיאה", "קורא שוב את התקציר",
-          "מחבר את הטענה לאיור שלה", "קורא את הדיון", "בודק את הסטטיסטיקה", "מסתכל על קבוצת הביקורת", "שוקל את הראיות"],
-    twist: ["כמו סוקר 2", "עם עט אדום", "פעמיים, ליתר ביטחון", "בלי לסמוך על התקציר", "בכבוד רב", "לפני שהקפה מתקרר",
-            "לאט, כמו פוסטדוק ביום שישי", "בשלושה עותקים", "כשהמנחה לא מסתכל", "בספקנות בריאה"],
-  },
+  en: ["Waiting for the BOLD signal", "Pretending to understand the supplementary", "Counting how many times “novel” appears", "Re-reading the methods section", "Checking the p-values twice", "Herding citations", "Looking for Figure S7", "Checking the controls", "Separating what’s shown from what’s claimed", "Checking which way causality points", "Finding the n, then the other n", "Tracing the claim back to its figure", "Following the citations down the rabbit hole", "Reading the supplementary materials so you don’t have to", "Asking Figure 3 to testify", "Arguing with the discussion section", "Correcting for multiple comparisons", "Reading the figure legend twice", "Looking for n in the legend", "Following a citation three papers deep", "Opening one more tab", "Trying to remember where I read that", "Running it once more, just to be sure", "Untangling panel C from panel D"],
+  he: ["מחכה לאות ה־BOLD", "מעמיד פנים שהוא מבין את החומר המשלים", "סופר כמה פעמים כתוב „חדשני”", "קורא שוב את פרק השיטות", "בודק את ערכי ה־p פעמיים", "רועה ציטוטים", "מחפש את איור S7", "בודק את קבוצות הביקורת", "מפריד בין מה שמוצג למה שנטען", "בודק לאיזה כיוון הסיבתיות הולכת", "מוצא את ה־n, ואז את ה־n השני", "מחבר את הטענה לאיור שלה", "עוקב אחרי הציטוטים עמוק לתוך מחילת הארנב", "קורא את חומרי ההשלמה כדי שאתה לא תצטרך", "מזמין את איור 3 להעיד", "מתווכח עם פרק הדיון", "מתקן להשוואות מרובות", "קורא את מקרא האיור פעמיים", "מחפש את ה־n במקרא", "עוקב אחרי ציטוט שלושה מאמרים לעומק", "פותח עוד לשונית אחת", "מנסה להיזכר איפה קראתי את זה", "מריץ עוד פעם אחת, ליתר ביטחון", "מפריד בין פאנל C לפאנל D"],
   recent: [],
 };
 function quip() {
   const q = QUIPS[HE ? "he" : "en"], pick = (l) => l[Math.floor(Math.random() * l.length)];
   for (let i = 0; i < 10; i++) {
-    const line = Math.random() < 0.5 ? pick(q.lines) : `${pick(q.act)}${HE ? " " : ", "}${pick(q.twist)}`;
+    const line = pick(q);
     if (!QUIPS.recent.includes(line) || i === 9) { QUIPS.recent = [line, ...QUIPS.recent].slice(0, 15); return line + "…"; }
   }
 }
@@ -666,7 +651,25 @@ $("#conn-hint").addEventListener("click", () => {
 // ---------- views and the side menu ----------
 const VIEWS = { chat: "Ganglion", radar: "radar", library: "library", history: "history", bored: "bored", learn: "learn", q20: "q20", conn: "conn-game", settings: "settings" };
 let VIEW = "chat";
+// The daily games are off unless turned on in Settings (this phone only); their statistics stay either way.
+const gamesOn = () => store.get("games") === true;
+function paintGames() {
+  const on = gamesOn();
+  $$('#view-bored [data-go="q20"], #view-bored [data-go="conn"]').forEach((b) => (b.hidden = !on));
+  const item = $('#menu [data-view="bored"], #menu [data-view="learn"]');
+  if (item) {
+    item.dataset.view = on ? "bored" : "learn";
+    const label = item.querySelector("[data-t]");
+    label.dataset.t = on ? "bored" : "learn-menu";
+    label.textContent = t(label.dataset.t);
+  }
+  const box = $("#games-on");
+  if (box) box.checked = on;
+}
+$("#games-on")?.addEventListener("change", (e) => { store.set("games", e.target.checked); paintGames(); });
+
 function showView(name) {
+  if (!gamesOn() && (name === "q20" || name === "conn")) name = "learn";
   VIEW = name;
   for (const v of Object.keys(VIEWS)) $("#view-" + v).hidden = v !== name;
   $("#view-name").textContent = name === "chat" ? "Ganglion" : t(VIEWS[name]);
@@ -698,6 +701,7 @@ document.addEventListener("click", (e) => {
 // ---------- language ----------
 function applyLang() {
   document.documentElement.lang = HE ? "he" : "en";
+  setTimeout(paintGames);  // after the labels are written
   document.documentElement.dir = HE ? "rtl" : "ltr";
   $$("[data-t]").forEach((el) => (el.textContent = t(el.dataset.t)));
   $$("[data-tp]").forEach((el) => (el.placeholder = t(el.dataset.tp)));

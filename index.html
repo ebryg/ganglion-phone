@@ -48,7 +48,7 @@
     <h1 data-t="pair-title">Pair with your computer</h1>
     <p data-t="pair-how">On your computer, open Ganglion → Settings → Phone → Pair this phone, and scan the code with this phone’s camera.</p>
     <p class="fine" data-t="pair-again" id="pair-again" hidden>Just signed in? Scan the code again: signing in drops it.</p>
-    <p class="fine" data-t="pair-private">The code holds a key that never leaves your two devices. Messages between them are end-to-end encrypted.</p>
+    <p class="fine" data-t="pair-private">The code holds the key that encrypts the messages between this phone and Ganglion. Keep it private.</p>
     <button class="link" type="button" data-lang-toggle></button>
   </main>
 
@@ -84,7 +84,7 @@
 
     <section class="view" id="view-bored" hidden>
       <button class="card-btn" type="button" data-go="learn"><b data-t="learn">Something to learn</b><span data-t="learn-sub">One interesting thing from a random paper in your library.</span></button>
-      <button class="card-btn" type="button" data-go="q20"><b data-t="q20">Who am I?</b><span data-t="q20-sub">Ganglion picks a paper from your library. Guess it in 20 yes/no questions. New every day.</span></button>
+      <button class="card-btn" type="button" data-go="q20"><b data-t="q20">Who am I?</b><span data-t="q20-sub">Ganglion picks a paper from your library. Find it in 21 yes/no questions. A new one every day.</span></button>
       <button class="card-btn" type="button" data-go="conn"><b data-t="conn-game">Quartets</b><span data-t="conn-sub">16 terms from your field in 4 hidden groups of 4. New every day.</span></button>
     </section>
 
@@ -127,6 +127,8 @@
       <h3 data-t="answers">Answers</h3>
       <label class="switch-row"><span><b data-t="brief">Brief</b><small data-t="brief-sub">Short answers, the main points only.</small></span><input type="checkbox" data-style="answer_brief"></label>
       <label class="switch-row"><span><b>STE</b><small data-t="ste-sub">Simplified Technical English: short, plain sentences.</small></span><input type="checkbox" data-style="answer_ste"></label>
+      <h3 data-t="games">Games</h3>
+      <label class="switch-row"><span><b data-t="games-on">Daily games</b><small data-t="games-sub">Who am I? and Quartets, built from your library. A new one each day.</small></span><input type="checkbox" id="games-on"></label>
       <h3 data-t="computer">Your computer</h3>
       <dl class="facts" id="facts"></dl>
       <button class="link quiet" type="button" id="unpair" data-t="unpair">Unpair this phone</button>
@@ -145,7 +147,7 @@
     <button type="button" class="menu-item" data-view="history"><span>☰</span><span data-t="history">Past conversations</span></button>
     <button type="button" class="menu-item" data-view="radar"><span>◉</span><span data-t="radar">Radar</span></button>
     <button type="button" class="menu-item" data-view="library"><span>⌕</span><span data-t="library">Library</span></button>
-    <button type="button" class="menu-item" data-view="bored"><span>✦</span><span data-t="bored">I’m bored</span></button>
+    <button type="button" class="menu-item" data-view="learn"><span>✦</span><span data-t="learn-menu">Something to learn</span></button>
     <button type="button" class="menu-item" data-view="settings"><span>⚙</span><span data-t="settings">Settings</span></button>
     <div class="menu-foot" id="menu-foot"></div>
   </nav>
