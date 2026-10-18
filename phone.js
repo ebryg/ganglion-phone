@@ -60,7 +60,14 @@ const T = {
   "mistakes": ["Mistakes left: {n}", "טעויות שנשארו: {n}"], "one-away": ["One away…", "חסר אחד…"], "conn-won": ["Solved! Come back tomorrow for a new one.", "פתרת! חזור מחר לחדש."],
   "conn-lost": ["Out of tries. Here are the groups.", "נגמרו הניסיונות. הנה הקבוצות."], "try-again": ["Try again", "נסה שוב"],
 };
-const t = (k, v = {}) => (T[k] ? T[k][HE ? 1 : 0] : k).replace(/\{(\w+)\}/g, (_, x) => v[x] ?? "");
+// Paired with the shared server (ELSC Apps Hub), which is always on: the same texts, without "your computer".
+const T_SERVER = {
+  "hello": ["Ask about your papers. Ganglion reads them on its server; the answer comes here.", "שאל על המאמרים שלך. גנגליון קורא אותם בשרת שלו, והתשובה מגיעה לכאן."],
+  "online": ["Ganglion online", "גנגליון מחובר"], "offline": ["Ganglion not answering", "גנגליון לא עונה"],
+  "offline-long": ["Ganglion isn’t answering right now. Try again in a few minutes.", "גנגליון לא עונה כרגע. נסה שוב בעוד כמה דקות."],
+  "timeout": ["No answer from Ganglion.", "אין תשובה מגנגליון."], "computer": ["Ganglion’s server", "השרת של גנגליון"],
+};
+const t = (k, v = {}) => ((LINK?.h && T_SERVER[k]) || T[k] ? ((LINK?.h && T_SERVER[k]) || T[k])[HE ? 1 : 0] : k).replace(/\{(\w+)\}/g, (_, x) => v[x] ?? "");
 
 // ---------- storage ----------
 const store = {
@@ -161,6 +168,7 @@ async function ping() {
   // The relay can take a few seconds to pick up a fresh connection, so allow one retry.
   const r = (await request({ type: "ping" }, null, 20000)) || (await request({ type: "ping" }, null, 20000));
   if (r) Object.assign(PC, { computer: r.computer || "", ai: r.ai || "", papers: r.papers, brief: !!r.brief, ste: !!r.ste });
+  if (r?.hosted && LINK && !LINK.h) { LINK.h = 1; store.set("pairing", LINK); applyLang(); }  // paired before the pairing said so
   if (!r && PC.on !== true) setOnline(false);
   paintStyles(); paintFacts();
   return r;
@@ -376,6 +384,9 @@ async function openConversation(id) {
 
 // The computer's errors arrive in English; the common ones get a plain explanation in the phone's language.
 function errorText(e) {
+  if (LINK?.h && /Couldn't reach/.test(e)) return HE  // on the shared server, no VPN or computer to check
+    ? "גנגליון לא הצליח להגיע ל־AI כרגע. נסה שוב בעוד כמה דקות."
+    : "Ganglion couldn't reach the AI just now. Try again in a few minutes.";
   if (/Couldn't reach the gateway/.test(e)) return HE
     ? "המחשב לא הצליח להגיע ל־AI של המוסד. הוא זמין רק מתוך הרשת של המוסד: חבר את המחשב ל־VPN ונסה שוב."
     : "Your computer couldn't reach your institution's AI. It is only open inside the institution: connect the computer to the VPN and try again.";
@@ -731,6 +742,7 @@ async function start() {
   // On the shared server the page sits behind the institution's login, which drops the code's "#p=…" on the way.
   if (!LINK) { $("#pair").hidden = false; $("#pair-again").hidden = location.hostname.endsWith("github.io"); return; }
   KEY = await crypto.subtle.importKey("raw", b64u.dec(LINK.k), "AES-GCM", false, ["encrypt", "decrypt"]);
+  if (LINK.h) applyLang();  // the server's wording, now that the pairing says which
   $("#app").hidden = false;
   $("#menu-btn").hidden = false;
   listen();
