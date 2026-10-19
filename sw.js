@@ -1,5 +1,5 @@
 /* Keeps the page installable and quick to open. Messages to ntfy always go to the network. */
-const V = "ganglion-phone-v22";
+const V = "ganglion-phone-v23";
 const base = new URL("./", self.location).href;
 self.addEventListener("install", (e) => e.waitUntil(caches.open(V).then((c) => c.addAll(["", "phone.js", "phone.css", "icon-192.png"].map((p) => base + p))).then(() => self.skipWaiting())));
 // Only this page's own older caches ("ganglion-phone-v<n>"): other pages and applications share the address.

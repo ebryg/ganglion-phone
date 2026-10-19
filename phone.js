@@ -23,7 +23,7 @@ const T = {
   "pair-title": ["Pair with your computer", "חיבור למחשב שלך"],
   "pair-how": ["On your computer, open Ganglion → Settings → Phone → Pair this phone, and scan the code with this phone’s camera.",
     "במחשב, פתח את גנגליון ← הגדרות ← טלפון ← חבר את הטלפון, וסרוק את הקוד במצלמה של הטלפון הזה."],
-  "pair-private": ["The code holds the key that encrypts the messages between this phone and Ganglion. Keep it private.", "בקוד יש את המפתח שמצפין את ההודעות בין הטלפון הזה לגנגליון. שמור אותו לעצמך."],
+  "pair-private": ["The code holds the key that encrypts the messages between this phone and Ganglion. Keep it private. This page and its messages go through services outside Ganglion and the university (GitHub Pages, ntfy.sh): don’t use it for confidential information or for material the university holds the copyright to.", "בקוד יש את המפתח שמצפין את ההודעות בין הטלפון הזה לגנגליון. שמור אותו לעצמך. הדף הזה וההודעות שלו עוברים דרך שירותים מחוץ לגנגליון ולאוניברסיטה (GitHub Pages, ntfy.sh): אל תשתמש בו למידע חסוי או לחומר שזכויות היוצרים שלו שייכות לאוניברסיטה."],
   "pair-again": ["Just signed in? Scan the code again: signing in drops it.", "רק נכנסת לחשבון? סרוק את הקוד שוב: הכניסה מוחקת אותו."],
   "hello": ["Ask about your papers. Your computer reads them; the answer comes here.", "שאל על המאמרים שלך. המחשב שלך קורא אותם, והתשובה מגיעה לכאן."],
   "ask-placeholder": ["Ask about your papers", "שאל על המאמרים שלך"], "reply": ["Reply", "תגובה"],
