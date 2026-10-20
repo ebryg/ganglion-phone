@@ -29,7 +29,8 @@ const T = {
   "ask-placeholder": ["Ask about your papers", "שאל על המאמרים שלך"], "reply": ["Reply", "תגובה"],
   "search-placeholder": ["Search your library", "חיפוש בספרייה"],
   "new-q": ["New conversation", "שיחה חדשה"], "history": ["Past conversations", "שיחות קודמות"], "radar": ["Radar", "רדאר"],
-  "library": ["Library", "ספרייה"], "bored": ["Learn and play", "ללמוד ולשחק"], "learn-menu": ["Something to learn", "משהו ללמוד"],
+  "library": ["Library", "ספרייה"], "deadlines": ["Coming deadlines", "דדליינים קרובים"], "papers": ["Papers", "מאמרים"],
+  "dl-conference": ["Conference", "כנס"], "dl-funding": ["Funding", "מימון"], "bored": ["Learn and play", "ללמוד ולשחק"], "learn-menu": ["Something to learn", "משהו ללמוד"],
   "games": ["Games", "משחקים"], "games-on": ["Daily games", "משחקים יומיים"],
   "games-sub": ["Who am I? and Quartets, built from your library. A new one each day.", "מי אני? ורביעיות, מתוך הספרייה שלך. חדש בכל יום."], "settings": ["Settings", "הגדרות"],
   "refresh": ["Refresh", "רענן"], "unpair": ["Unpair this phone", "נתק את הטלפון"], "unpair-confirm": ["Tap again to unpair", "לחץ שוב לניתוק"],
@@ -415,10 +416,15 @@ async function loadRadar() {
   const r = await request({ type: "briefing" }, null, 30000);
   if (!r) { box.innerHTML = `<p class="empty">${t("offline-long")}</p>`; return; }
   let d; try { d = JSON.parse(r.text); } catch { d = { items: [] }; }
-  box.innerHTML = d.items.length ? d.items.map((i) => `<article class="item">
+  // The coming deadlines first (a deadline reminder opens here), then the papers
+  const dl = (d.deadlines || []).map((x) => `<article class="item">
+      <div class="h" dir="auto">${x.url ? `<a href="${esc(safeUrl(x.url))}" target="_blank" rel="noopener">${esc(x.what)}</a>` : esc(x.what)}</div>
+      <div class="m">${esc(t(x.kind === "funding" ? "dl-funding" : "dl-conference"))} · ${esc(x.date)}${x.where ? " · " + esc(x.where) : ""}</div></article>`).join("");
+  const head = dl ? `<h3 class="sub">${esc(t("deadlines"))}</h3>${dl}<h3 class="sub">${esc(t("papers"))}</h3>` : "";
+  box.innerHTML = head + (d.items.length ? d.items.map((i) => `<article class="item">
       <div class="h ${i.kind === "new" ? "new" : ""}" dir="auto">${i.url ? `<a href="${esc(safeUrl(i.url))}" target="_blank" rel="noopener">${esc(i.headline)}</a>` : esc(i.headline)}</div>
       ${i.venue ? `<div class="m">${esc(i.venue)}</div>` : ""}<p dir="auto">${esc(i.takeaway)}</p></article>`).join("")
-    : `<p class="empty">${t("no-briefing")}</p>`;
+    : `<p class="empty">${t("no-briefing")}</p>`);
 }
 
 async function search(q) {
