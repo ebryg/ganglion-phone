@@ -47,6 +47,7 @@ h3 { margin: 10px 0 0; font: 600 12px var(--sans); letter-spacing: .06em; text-t
 
 /* the conversation */
 .thread { display: grid; gap: 18px; align-content: start; flex: 1; }
+.add-banner { margin: 8px 12px 0; padding: 10px 12px; border-radius: 10px; background: var(--sunken, #f1ecf8); color: var(--ink, #1a1a1d); font-size: 15px; line-height: 1.4; }
 .hello { align-self: center; display: grid; justify-items: center; gap: 10px; text-align: center; padding: 18vh 12px 0; color: var(--muted); }
 .hello-mark { width: 52px; height: 52px; color: var(--fiber); }
 .hello p { margin: 0; max-width: 30ch; }

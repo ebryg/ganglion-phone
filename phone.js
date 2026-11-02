@@ -36,6 +36,9 @@ const T = {
   "refresh": ["Refresh", "רענן"], "unpair": ["Unpair this phone", "נתק את הטלפון"], "unpair-confirm": ["Tap again to unpair", "לחץ שוב לניתוק"],
   "connecting": ["Connecting…", "מתחבר…"], "online": ["Computer online", "המחשב מחובר"], "offline": ["Computer not answering", "המחשב לא עונה"],
   "offline-long": ["Your computer isn’t answering. It needs to be on, with Ganglion running.", "המחשב לא עונה. הוא צריך להיות דלוק, עם גנגליון פועל."],
+  "adding": ["Adding to Zotero…", "מוסיף לזוטרו…"],
+  "add-offline": ["Your computer isn’t answering. Tap the button in the email again when it is on.", "המחשב לא עונה. לחץ שוב על הכפתור במייל כשהוא דלוק."],
+  "add-pair": ["This browser isn’t connected to Ganglion, so it can’t add the paper. Use a phone or computer paired with Ganglion: Settings → Phone.", "הדפדפן הזה לא מחובר לגנגליון ולכן לא יכול להוסיף. השתמש בטלפון או במחשב מחוברים: הגדרות ← טלפון."],
   "no-briefing": ["Nothing on the Radar yet.", "עדיין אין כלום ברדאר."], "no-results": ["Nothing found.", "לא נמצא כלום."],
   "no-convs": ["No conversations yet.", "עדיין אין שיחות."], "timeout": ["No answer from your computer.", "אין תשובה מהמחשב."],
   "copy": ["Copy", "העתק"], "copied": ["Copied", "הועתק"],
@@ -732,6 +735,17 @@ $("#lang-request").addEventListener("click", () => {
   a.target = "_blank"; a.rel = "noopener"; document.body.append(a); a.click(); a.remove();
 });
 
+// "Add to Zotero" in the summary email opens this page with #add=<summary>.<paper number or all>: the computer adds
+// the papers (Radar › the summary's day) and says what it did. The tap in the email is the approval.
+async function radarAdd(digest, which) {
+  const box = $("#add-banner");
+  box.hidden = false;
+  box.textContent = t("adding");
+  const r = await requestJSON({ type: "radar_add", digest: Number(digest), which }, 90000);
+  box.textContent = !r ? t("add-offline") : r.error ? r.error : r.message;
+  box.onclick = () => { box.hidden = true; };
+}
+
 // ---------- start ----------
 async function start() {
   applyLang();
@@ -748,9 +762,12 @@ async function start() {
     } catch {}
     history.replaceState(null, "", location.pathname);
   }
+  const add = location.hash.match(/^#add=(\d+)\.(all|\d+)$/);
   LINK = store.get("pairing");
   // On the shared server the page sits behind the institution's login, which drops the code's "#p=…" on the way.
-  if (!LINK) { $("#pair").hidden = false; $("#pair-again").hidden = location.hostname.endsWith("github.io"); return; }
+  if (!LINK) {
+    if (add) { const b = $("#add-banner"); b.hidden = false; b.textContent = t("add-pair"); }
+    $("#pair").hidden = false; $("#pair-again").hidden = location.hostname.endsWith("github.io"); return; }
   KEY = await crypto.subtle.importKey("raw", b64u.dec(LINK.k), "AES-GCM", false, ["encrypt", "decrypt"]);
   if (LINK.h) applyLang();  // the server's wording, now that the pairing says which
   $("#app").hidden = false;
@@ -760,8 +777,9 @@ async function start() {
   // A notification opens the Radar (#updates; older ones say #briefing). The address is then left clean.
   const radar = location.hash === "#updates" || location.hash === "#briefing";
   if (location.hash) history.replaceState(null, "", location.pathname);
-  showView(radar ? "radar" : "chat");
-  if (conv && !radar) openConversation(conv);
+  showView(radar || add ? "radar" : "chat");
+  if (conv && !radar && !add) openConversation(conv);
+  if (add) radarAdd(add[1], add[2]);
 }
 
 $("#ask-form").addEventListener("submit", (e) => { e.preventDefault(); ask($("#q").value); });
