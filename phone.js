@@ -120,7 +120,9 @@ function request(obj, onUpdate, timeoutMs = 240000) {
     let timer;
     const done = (v) => { clearTimeout(timer); resolve(v); };
     let id;
+    const sentAt = Date.now();
     try { id = await send(obj); } catch { return done(null); }
+    askWhileWaiting(sentAt);
     const parts = [];
     pending.set(id, (msg) => {
       if (msg.type === "status") { onUpdate && onUpdate(msg); return; }
@@ -142,18 +144,52 @@ async function requestJSON(obj, timeoutMs = 60000) {
   try { return JSON.parse(r.text); } catch { return { error: r.text || "?" }; }
 }
 
+// A message from the computer: handled once, whether it came down the open stream or by asking.
+const SEEN = new Set();
+async function take(m) {
+  if (!m || m.event !== "message" || SEEN.has(m.id)) return;
+  SEEN.add(m.id);
+  store.set("since", m.id);
+  const msg = await open(m.message || "");
+  if (msg) setOnline(true);  // any reply means the computer is there
+  if (msg && pending.has(msg.re)) pending.get(msg.re)(msg);
+}
+
+// Some networks (a lab's Wi-Fi) hold a streamed answer back: the computer's replies reach ntfy but never come down the
+// open stream. Then, while a request waits, the page asks every few seconds instead. It starts only when nothing at all
+// has come down the stream for a while after a request (on an ordinary network the computer's status lines come at once).
+const STREAM = { last: 0, held: false, polling: false };
+function askWhileWaiting(sentAt) {
+  setTimeout(async () => {
+    if (!pending.size || STREAM.polling || (STREAM.last > sentAt && !STREAM.held)) return;
+    STREAM.held = true;
+    STREAM.polling = true;
+    try {
+      while (pending.size) {
+        const since = store.get("since") || String(Math.floor(sentAt / 1000) - 60);
+        try {
+          const r = await fetch(`${LINK.srv.replace(/\/$/, "")}/${LINK.down}/json?poll=1&since=${encodeURIComponent(since)}`);
+          for (const line of (await r.text()).split("\n")) {
+            if (line.trim()) { try { await take(JSON.parse(line)); } catch { /* a line that isn't JSON */ } }
+          }
+        } catch { /* offline for a moment: asked again */ }
+        await new Promise((ok) => setTimeout(ok, 4000));
+      }
+    } finally { STREAM.polling = false; }
+  }, STREAM.held ? 1500 : 8000);
+}
+
 function listen() {
   // A message id, or a unix time a minute back for a fresh pairing (ntfy rejects "now").
   const since = store.get("since") || String(Math.floor(Date.now() / 1000) - 60);
   const es = new EventSource(`${LINK.srv.replace(/\/$/, "")}/${LINK.down}/sse?since=${encodeURIComponent(since)}`);
+  const alive = () => { STREAM.last = Date.now(); };
+  es.addEventListener("keepalive", alive);
   es.onmessage = async (e) => {
+    alive();
     let m;
     try { m = JSON.parse(e.data); } catch { return; }
-    if (m.event !== "message") return;
-    store.set("since", m.id);
-    const msg = await open(m.message || "");
-    if (msg) setOnline(true);  // any reply means the computer is there
-    if (msg && pending.has(msg.re)) pending.get(msg.re)(msg);
+    await take(m);
   };
   es.onerror = () => { /* EventSource reconnects by itself */ };
 }
